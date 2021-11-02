@@ -1,0 +1,56 @@
+<div class="container">
+  
+    <div class="col-md-12"> 
+      <div class="row">
+        <div class="col-sm">
+        <h4>Author List</h4>
+      </div>
+    </div>
+    <br>
+        <div class="row">
+          <div class="col-sm">
+            <div class="input-group">
+              <a href="#" routerLink="./create" class="btn btn-success">Add Author</a>
+            </div>
+          </div>
+          <div class="col-sm">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="term">
+       </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Book Name</th>
+            <th scope="col">Author Name</th>
+            <th scope="col" width="220px">Action</th>
+          </tr>
+        </thead> <tbody>
+          <tr *ngFor=" let author of authors | filter:term | paginate : { itemsPerPage: pageSize, currentPage: page, totalItems: count };
+          let i = index" [class.active]="i == currentIndex">
+            <td>{{ author.bookName }}</td>
+            <td>{{ author.name }} {{ author.surname }}</td>
+            <td>
+              <a href="#" routerLink="edit/{{author.id}}" class="btn btn-primary">Edit</a>
+              <button type="button" (click)="deleteBook(author.id)" class="btn btn-danger">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
+        <div class="row">
+          <div class="col-8">
+          </div>
+          <div class="col-4">
+            
+        <div class="d-flex justify-content-center">
+          <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)">
+          </pagination-controls>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>

@@ -1,0 +1,64 @@
+<div class="container">
+  
+<div class="col-md-12"> 
+  <div class="row">
+    <div class="col-sm">
+    <h4>Category List</h4>
+  </div>
+</div>
+<br>
+    <div class="row">
+      <div class="col-sm">
+        <div class="input-group">
+          <a href="#" routerLink="./create" class="btn btn-success">Add Category</a>
+        </div>
+      </div>
+      <div class="col-sm">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="term">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Category Name</th>
+        <th scope="col" width="220px">Action</th>
+      </tr>
+    </thead> <tbody>
+      <tr *ngFor="
+      let category of categories | filter:term | paginate : {
+              itemsPerPage: pageSize,
+              currentPage: page,
+              totalItems: count
+            };
+      let i = index
+    "
+    [class.active]="i == currentIndex">
+        <td>{{ category.name }}</td>
+        <td>
+          <a href="#" routerLink="edit/{{category.id}}" class="btn btn-primary">Edit</a>
+          <button type="button" (click)="deleteCategory(category.id)" class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
+    <div class="row">
+      <div class="col-8">
+      </div>
+      <div class="col-4">
+        
+    <div class="d-flex justify-content-center">
+      <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      (pageChange)="handlePageChange($event)">
+    </pagination-controls>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>

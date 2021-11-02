@@ -1,0 +1,34 @@
+<div class="container">
+    <h4>Add Author</h4>
+    <div *ngIf="!isAuthorAdded">
+        <div class="form-group">
+            <label for="title">Select Book:</label>
+            <select class="custom-select" name="ddlBook" [(ngModel)]="form.bookId" #ddlBook="ngModel" 
+            [ngClass]="{ 'is-invalid': form.submitted && ddlBook.invalid }" required>
+              <option value="" class="text-primary font-weight-bolder">
+                --- Select Book ---
+              </option>
+              <option *ngFor="let book of books" [value]="book.id">
+                {{book.name}}
+              </option>
+            </select>
+          </div>
+      <div class="form-group">
+      <label for="title">Name:</label>
+      <input type="text" class="form-control" id="name" required [(ngModel)]="form.name" name="name" />
+    </div>
+    <div class="form-group">
+        <label for="title">Surname:</label>
+        <input type="text" class="form-control" id="surName" required [(ngModel)]="form.surName" name="surName" />
+      </div>
+
+        <div class="form-group">
+            <button class="btn btn-success" (click)="onSubmit()"> Save </button>
+           <button type="button" class="btn btn-warning" (click)="onCancel()">Cancel</button>
+          </div>
+      </div>
+  
+      <div *ngIf="isAuthorAdded">
+        <h3>New Author added!</h3>
+      </div>   
+</div>
