@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TComponent } from './t.component';
+import { OnepageComponent } from './onepage.component';
 
-describe('TComponent', () => {
-  let component: TComponent;
-  let fixture: ComponentFixture<TComponent>;
+describe('OnepageComponent', () => {
+  let component: OnepageComponent;
+  let fixture: ComponentFixture<OnepageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TComponent ]
+      declarations: [ OnepageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TComponent);
+    fixture = TestBed.createComponent(OnepageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

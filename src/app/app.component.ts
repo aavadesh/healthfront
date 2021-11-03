@@ -13,7 +13,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private roles: string[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
-  showModeratorBoard = false;
+  showUserBoard = false;
   username?: string;
 
   constructor(private config: PrimeNGConfig, private tokenStorageService: TokenStorageService, private route: Router) {}
@@ -66,11 +66,18 @@ export class AppComponent implements OnInit, OnDestroy {
       this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
-      this.route.navigate(['front'])
       const user = this.tokenStorageService.getUser();
 
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+      this.showAdminBoard = user.role.name == "Admin" ? true : false;
+      if(this.showAdminBoard)
+      {
+        this.route.navigate(['panel'])
+      }
+      this.showUserBoard =user.role.name == "User" ? true : false;
+      if(this.showUserBoard)
+      {
+        this.route.navigate(['front'])
+      }
 
       this.username = user.username;
     }
@@ -78,8 +85,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {}
 
-    logout(): void {
+    logout(): void { debugger;
       this.tokenStorageService.signOut();
-      window.location.reload();
+      this.route.navigate(['/login'])
     }
 }

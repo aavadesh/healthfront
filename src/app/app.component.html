@@ -1,63 +1,40 @@
 
      <nav>
-        <div class='MultiLevelMenu depth-1'>
-            <ul class='menu' style="BACKGROUND: gainsboro;">
-                <li class='MultiItem'  *ngIf="isLoggedIn">
-                    <a class="MultiLink" href="/t" routerLink="home">Front</a>
-                    
-                    <div class='MultiLevelMenu depth-2'>
-                        <ul class='menu'>
-                            <li class='MultiItem'>
-                                <a class="MultiLink" href='#'>Backend</a>
-                            </li>
-                            <li class='MultiItem'>
-                                <a class="MultiLink" href='#'>Search</a>
-                            </li>
-                            <li class='MultiItem'>
-                                <a class="MultiLink" href='#'>Page One</a>
-                            </li>
-                            <li class='MultiItem'>
-                                <a class="MultiLink" href='#'>Test Page</a>
-                            </li>
-                        </ul>
-                    </div>
-    
-                </li>
-                <li class='MultiItem' *ngIf="isLoggedIn">
-                    <a class="MultiLink" href="panel" routerLink="panel">Panel</a>
-                    
-                    <div class='MultiLevelMenu depth-2'>
-                        <ul class='menu'>
-                            <li class='MultiItem'>
-                                <a class="MultiLink" routerLink="panel/author">Author</a>
-                            </li>
-                            <li class='MultiItem'>
-                              <a class="MultiLink" routerLink='panel/book'>Book</a>
-                            </li>
-                            <li class='MultiItem'>
-                            <a class="MultiLink" routerLink='panel/bookContent'>Book Content</a>
-                            </li>
-                            <li class='MultiItem'>
-                                <a class="MultiLink" routerLink='panel/category'>Category</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> 
-                <li class="MultiItem" [hidden]="isLoggedIn">
-                  <a href="/register" class="MultiLink" routerLink="register">Sign Up</a>
-                </li>
-                <li class="MultiItem" [hidden]="isLoggedIn">
-                  <a href="/login" class="MultiLink" routerLink="login">Login</a>
-                </li>
-                <li class="MultiItem">
-                  <a href="/profile" class="MultiLink" routerLink="profile">{{ username }}</a>
-                </li>
-                <li class="MultiItem" *ngIf="isLoggedIn">
-                  <a href class="MultiLink" (click)="logout()">LogOut</a>
-                </li>
-            </ul>
+        <div class='topnav'>
+                    <a href="front" routerLink="home"  *ngIf="showUserBoard">Front</a>
+                  
+                    <a href='#'  *ngIf="showUserBoard">Backend</a>
+               
+                    <a href='#' routerLink='panel/testpage'  *ngIf="showUserBoard">Search</a>
+                
+                    <a href='#'  routerLink='front/testpage' *ngIf="showUserBoard">Page One</a>
+               
+                    <a href='#' routerLink='front/testpage' *ngIf="showUserBoard">Test Page</a>
+        
+              
+                    <a href="panel" routerLink="panel"  *ngIf="showAdminBoard">Panel</a>
+                 
+                    <a routerLink="panel/author"  *ngIf="showAdminBoard">Author</a>
+               
+                  <a routerLink='panel/book'  *ngIf="showAdminBoard">Book</a>
+              
+                <a routerLink='panel/bookContent'  *ngIf="showAdminBoard">Book Content</a>
+               
+                    <a routerLink='panel/category'  *ngIf="showAdminBoard">Category</a>
+              
+               
+                  <a href="/register" routerLink="register" [hidden]="isLoggedIn">Sign Up</a>
+               
+               
+                  <a href="/login" routerLink="login" [hidden]="isLoggedIn">Login</a>
+               
+                
+              
+                  <a href (click)="logout()" *ngIf="isLoggedIn">LogOut</a>
+              
         </div>
-    </nav>
+      </nav>
+      <br>
   <router-outlet></router-outlet>
   <!-- <nav class="navbar navbar-expand navbar-dark bg-dark">
     <ul class="navbar-nav mr-auto" routerLinkActive="active">

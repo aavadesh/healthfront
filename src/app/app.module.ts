@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 /** PrimeNG */
-import { TComponent } from './components/t/t.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
@@ -18,11 +17,12 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
 
 import {NgxPaginationModule} from 'ngx-pagination';  
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { OnepageComponent } from './components/onepage/onepage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TComponent,
+    OnepageComponent,
     LoginComponent,
     RegisterComponent,
   ],
