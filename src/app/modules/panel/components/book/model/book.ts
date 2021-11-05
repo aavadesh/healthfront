@@ -7,4 +7,6 @@ export interface Book {
     slugName: string;
     categoryId?: Guid;
     categoryName: string;
+    authorId: Guid;
+    authorFullName: string;
 }

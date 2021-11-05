@@ -1,73 +1,44 @@
 
-     <nav>
+     <nav *ngIf="showUserBoard">
         <div class='topnav'>
-                    <a href="front" routerLink="home"  *ngIf="showUserBoard">Front</a>
+                    <a href="#" (click)="onPanel()">Panel</a>
                   
-                    <a href='#'  *ngIf="showUserBoard">Backend</a>
+                    <a href='#'>Backend</a>
                
-                    <a href='#' routerLink='panel/testpage'  *ngIf="showUserBoard">Search</a>
+                    <a href='#' routerLink='panel/testpage'>Search</a>
                 
-                    <a href='#'  routerLink='front/testpage' *ngIf="showUserBoard">Page One</a>
+                    <a href='#'  routerLink='front/testpage'>Page One</a>
                
-                    <a href='#' routerLink='front/testpage' *ngIf="showUserBoard">Test Page</a>
-        
-              
-                    <a href="panel" routerLink="panel"  *ngIf="showAdminBoard">Panel</a>
+                    <a href='#' routerLink='front/testpage'>Test Page</a>
+        </div>
+      </nav>
+
+      <nav *ngIf="showAdminBoard">
+        <div class='topnav'>
+                   
+                    <a href="#" (click)="onFront()" routerLink="front"  >Front</a>
                  
-                    <a routerLink="panel/author"  *ngIf="showAdminBoard">Author</a>
+                    <a routerLink="panel/author">Author</a>
                
-                  <a routerLink='panel/book'  *ngIf="showAdminBoard">Book</a>
+                  <a routerLink='panel/book'>Book</a>
               
-                <a routerLink='panel/bookContent'  *ngIf="showAdminBoard">Book Content</a>
+                <a routerLink='panel/bookContent'>Book Content</a>
                
-                    <a routerLink='panel/category'  *ngIf="showAdminBoard">Category</a>
+                    <a routerLink='panel/category'>Category</a>
               
                
-                  <a href="/register" routerLink="register" [hidden]="isLoggedIn">Sign Up</a>
+                  <a href="/register" routerLink="register">Sign Up</a>
                
                
-                  <a href="/login" routerLink="login" [hidden]="isLoggedIn">Login</a>
+                  <a href="/login" routerLink="login">Login</a>
                
                 
               
-                  <a href (click)="logout()" *ngIf="isLoggedIn">LogOut</a>
+                  <a href (click)="logout()">LogOut</a>
               
         </div>
       </nav>
+
       <br>
   <router-outlet></router-outlet>
-  <!-- <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <ul class="navbar-nav mr-auto" routerLinkActive="active">
-      <li class="nav-item">
-        <a href="/t" class="nav-link" routerLink="home">Home </a>
-      </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a href="/front" class="nav-link" routerLink="admin">Front</a>
-      </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a href="/panel" class="nav-link" routerLink="mod">Panel</a>
-      </li>
-      <li class="nav-item">
-        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-      <li class="nav-item">
-        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a href="/login" class="nav-link" routerLink="login">Login</a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-      <li class="nav-item">
-        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
-      </li>
-      <li class="nav-item">
-        <a href class="nav-link" (click)="(logout)">LogOut</a>
-      </li>
-    </ul>
-  </nav> -->
-
+ 

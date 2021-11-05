@@ -24,10 +24,16 @@ export class TokenStorageService {
   public getToken(): string | null {
     return window.sessionStorage.getItem(TOKEN_KEY);
   }
-
+  public getRole(): string | null {
+    return window.sessionStorage.getItem("role");
+  }
   public saveUser(user: any): void {
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+  }
+
+  public setRole(role: any): void {
+    window.sessionStorage.setItem("role", JSON.stringify(role));
   }
 
   public getUser(): any {

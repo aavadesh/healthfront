@@ -25,6 +25,7 @@
       <thead>
       <tr>
         <th scope="col">Category Name</th>
+        <th scope="col">Slug</th>
         <th scope="col" width="220px">Action</th>
       </tr>
     </thead> <tbody>
@@ -38,6 +39,7 @@
     "
     [class.active]="i == currentIndex">
         <td>{{ category.name }}</td>
+        <td>{{ category.slug }}</td>
         <td>
           <a href="#" routerLink="edit/{{category.id}}" class="btn btn-primary">Edit</a>
           <button type="button" (click)="deleteCategory(category.id)" class="btn btn-danger">Delete</button>

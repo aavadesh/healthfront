@@ -12,12 +12,23 @@
             <option value="" class="text-primary font-weight-bolder">
               --- Select Category ---
             </option>
-            <option *ngFor="let category of categories" [value]="category.id">
-              {{category.name}}
+            <option *ngFor="let item of categories" [value]="item.id">
+              {{item.name}}
             </option>
           </select>
         </div>
-
+        <div class="form-group">
+          <label for="title">Select Author:</label>
+          <select class="custom-select" name="ddlAuthor" [(ngModel)]="form.authorId" #ddlAuthor="ngModel" 
+          [ngClass]="{ 'is-invalid': form.submitted && ddlAuthor.invalid }" required>
+            <option value="" class="text-primary font-weight-bolder">
+              --- Select Author ---
+            </option>
+            <option *ngFor="let item of authors" [value]="item.id">
+              {{item.name}}
+            </option>
+          </select>
+        </div>
         <div class="form-group">
             <button class="btn btn-success" (click)="onSubmit()"> Save </button>
            <button type="button" class="btn btn-warning" (click)="onCancel()">Cancel</button>

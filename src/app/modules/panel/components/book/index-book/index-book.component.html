@@ -24,10 +24,9 @@
         <table class="table">
           <thead>
           <tr>
-            <th scope="col">Name</th>
+            <th scope="col">Title</th>
             <th scope="col">Slug</th>
-            <th scope="col">Slug(From Name)</th>
-            <th scope="col">Category Name</th>
+            <th scope="col">Author Fullname</th>
             <th scope="col" width="220px">Action</th>
           </tr>
         </thead> <tbody>
@@ -35,8 +34,7 @@
           let i = index" [class.active]="i == currentIndex">
             <td>{{ book.name }}</td>
             <td>{{ book.slug }}</td>
-            <td>{{ book.slugName }}</td>
-            <td>{{ book.categoryName }}</td>
+            <td>{{ book.authorFullName }}</td>
             <td>
               <a href="#" routerLink="edit/{{book.id}}" class="btn btn-primary">Edit</a>
               <button type="button" (click)="deleteBook(book.id)" class="btn btn-danger">Delete</button>

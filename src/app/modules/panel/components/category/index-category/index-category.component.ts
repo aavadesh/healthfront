@@ -19,7 +19,7 @@ export class IndexCategoryComponent implements OnInit {
 
   page = 1;
   count = 0;
-  pageSize = 10;
+  pageSize = 5;
   pageSizes = [5, 10, 15];
 
   term!: string;

@@ -26,19 +26,19 @@ export class IndexBookContentComponent implements OnInit {
   constructor(private postService: PostService, private router: Router) { }
 
   ngOnInit(): void {
+    this.showData();
   }
-  deleteContent(id: Guid){
-    this.postService.delete(id, tableName).subscribe(res => {
+  deleteContent(id: Guid){debugger
+    this.postService.delete(id, tableName).subscribe(res => {debugger
          this.bookContent = this.bookContent.filter(item => item.id !== id);
          console.log('BookContent deleted successfully!');
-         this.router.navigateByUrl('panel/bookcontent');
+         this.router.navigateByUrl('panel/bookContent');
     })
   }
   
   showData(): void {
-    debugger
     this.postService.getAll(tableName)
-        .subscribe( res => { debugger
+        .subscribe( res => {
             this.bookContent = res;
             console.log(res);
           },

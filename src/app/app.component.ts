@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { TokenStorageService } from './_services/token-storage.service';
 import { PrimeNGConfig } from "primeng/api";
+import { SelectorListContext } from "@angular/compiler";
+import { Role } from "./model/role";
 
 @Component({
   selector: "app-root",
@@ -16,7 +18,25 @@ export class AppComponent implements OnInit, OnDestroy {
   showUserBoard = false;
   username?: string;
 
-  constructor(private config: PrimeNGConfig, private tokenStorageService: TokenStorageService, private route: Router) {}
+  constructor(private config: PrimeNGConfig, private tokenStorageService: TokenStorageService, private router: Router) {
+    router.events.subscribe(event => {
+
+      if (event instanceof NavigationEnd ) {
+        if (event.url == "/front")
+        {
+          this.showUserBoard = true;
+          this.showAdminBoard = false;
+          window.sessionStorage.setItem("User_Role", Role.User)
+        } 
+        if (event.url == "/login")
+        {
+          this.showAdminBoard = true;
+          this.showUserBoard = false;
+          window.sessionStorage.setItem("User_Role", Role.Admin)
+        } 
+      }
+    });
+  }
 
   ngOnInit() {
       this.config.ripple = true;
@@ -62,31 +82,34 @@ export class AppComponent implements OnInit, OnDestroy {
         emptyMessage: "Nie znaleziono wyników",
         emptyFilterMessage: "Nie znaleziono wyników",
       });
-
       this.isLoggedIn = !!this.tokenStorageService.getToken();
-
-    if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-
-      this.showAdminBoard = user.role.name == "Admin" ? true : false;
-      if(this.showAdminBoard)
+      if (window.sessionStorage.getItem("User_Role") == Role.Admin)
       {
-        this.route.navigate(['panel'])
+        this.showAdminBoard = true;
+        this.router.navigate(['login']);
       }
-      this.showUserBoard =user.role.name == "User" ? true : false;
-      if(this.showUserBoard)
+      if (window.sessionStorage.getItem("User_Role") == Role.User)
       {
-        this.route.navigate(['front'])
+        this.router.navigate(['front']);
       }
-
-      this.username = user.username;
-    }
   }
 
     ngOnDestroy() {}
 
-    logout(): void { debugger;
+    logout(): void {
       this.tokenStorageService.signOut();
-      this.route.navigate(['/login'])
+      this.router.navigate(['front'])
+    }
+
+    onFront(): void {
+      this.tokenStorageService.signOut();
+      this.showUserBoard = true;
+      this.router.navigate(['front'])
+    }
+
+    onPanel(): void {
+      this.tokenStorageService.signOut();
+      this.showAdminBoard = true;
+      this.router.navigate(['login'])
     }
 }

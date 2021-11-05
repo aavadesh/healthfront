@@ -24,15 +24,17 @@
         <table class="table">
           <thead>
           <tr>
-            <th scope="col">Book Name</th>
-            <th scope="col">Author Name</th>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Slug</th>
             <th scope="col" width="220px">Action</th>
           </tr>
         </thead> <tbody>
           <tr *ngFor=" let author of authors | filter:term | paginate : { itemsPerPage: pageSize, currentPage: page, totalItems: count };
           let i = index" [class.active]="i == currentIndex">
-            <td>{{ author.bookName }}</td>
-            <td>{{ author.name }} {{ author.surname }}</td>
+            <td>{{ author.name }}</td>
+            <td>{{ author.surname }}</td>
+            <td>{{ author.slug }}</td>
             <td>
               <a href="#" routerLink="edit/{{author.id}}" class="btn btn-primary">Edit</a>
               <button type="button" (click)="deleteBook(author.id)" class="btn btn-danger">Delete</button>

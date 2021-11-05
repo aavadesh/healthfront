@@ -15,13 +15,17 @@
                   </option>
               </select>
           </div>
+          <div class="form-group">
+            <label for="title">Select Author:</label>
+            <select formControlName="authorId" class="custom-select">
+                <option *ngFor="let item of authors" [value]="item.id">
+                    {{item.name}}
+                  </option>
+              </select>
+          </div>
         <div class="form-group">
             <label for="body">Slug:</label>
             <input formControlName="slug" placeholder="Slug" name="slug" class="form-control" id="slug">
-        </div>
-        <div class="form-group">
-            <label for="body">Slug(From Name):</label>
-            <input formControlName="slugName" placeholder="Slug(From Name)" name="slugName" class="form-control" id="slugName">
         </div>
         <button class="btn btn-primary" type="submit">Update</button>
         

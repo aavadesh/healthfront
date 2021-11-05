@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { PostService } from 'src/app/_services/post.service';
+import { Author } from '../../author/model/author';
 import { Category } from '../../category/model/category';
 import { Book } from '../model/book';
 const tableName = 'Book';
@@ -20,9 +21,14 @@ export class EditBookComponent implements OnInit {
   categories: Category[] = [];
   ddlCategory = "";
   
+  authors: Author[] = [];
+  ddlAuthor = "";
   constructor(public postService: PostService,
     private route: ActivatedRoute,
-    private router: Router, private formBuilder: FormBuilder) { this.GetCategoryList();}
+    private router: Router, private formBuilder: FormBuilder) { 
+      this.GetCategoryList();
+    this.GetAuthorList();
+  }
 
   ngOnInit(): void {
     debugger
@@ -38,7 +44,9 @@ export class EditBookComponent implements OnInit {
     slug: [],
     slugName: [],
     categoryName: [],
-    categoryId: []
+    categoryId: [],
+    authorFullName: [],
+    authorId: []
   });
   this.postService.findById(this.id, tableName, 'GetByBookId')
     .subscribe( data => {
@@ -65,6 +73,16 @@ export class EditBookComponent implements OnInit {
     this.postService.getAll("Category")
       .subscribe(res => {
           this.categories = res;
+          console.log(res);
+        },
+        err => { 
+          console.log(err);
+        });
+  }
+  GetAuthorList(){
+    this.postService.getAll("Author")
+      .subscribe(res => {
+          this.authors = res;
           console.log(res);
         },
         err => { 

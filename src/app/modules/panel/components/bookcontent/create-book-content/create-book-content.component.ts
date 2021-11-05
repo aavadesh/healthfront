@@ -36,12 +36,12 @@ export class CreateBookContentComponent implements OnInit {
 
     this.postService.create(data, tableName).subscribe(() => {
          console.log('bookcontent created successfully!');
-         this.router.navigateByUrl('panel/bookcontent');
+         this.router.navigateByUrl('panel/bookContent');
     })
   }
 
   onCancel(): void {
-    this.router.navigateByUrl('panel/bookcontent');
+    this.router.navigateByUrl('panel/bookContent');
   }
   GetBookList(){
     this.postService.getAll("Book")
