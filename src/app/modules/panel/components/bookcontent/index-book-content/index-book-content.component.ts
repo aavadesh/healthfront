@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
-import { PostService } from 'src/app/_services/post.service';
+import { BookcontentService } from '../service/bookcontent.service';
 import { Bookcontent } from '../model/bookcontent';
 
 const tableName = 'BookContent';
@@ -23,13 +23,13 @@ export class IndexBookContentComponent implements OnInit {
 
   term!: string;
   event: any;
-  constructor(private postService: PostService, private router: Router) { }
+  constructor(private bookContentService: BookcontentService, private router: Router) { }
 
   ngOnInit(): void {
     this.showData();
   }
   deleteContent(id: Guid){debugger
-    this.postService.delete(id, tableName).subscribe(res => {debugger
+    this.bookContentService.delete(id, tableName).subscribe(res => {debugger
          this.bookContent = this.bookContent.filter(item => item.id !== id);
          console.log('BookContent deleted successfully!');
          this.router.navigateByUrl('panel/bookContent');
@@ -37,7 +37,7 @@ export class IndexBookContentComponent implements OnInit {
   }
   
   showData(): void {
-    this.postService.getAll(tableName)
+    this.bookContentService.getAll(tableName)
         .subscribe( res => {
             this.bookContent = res;
             console.log(res);

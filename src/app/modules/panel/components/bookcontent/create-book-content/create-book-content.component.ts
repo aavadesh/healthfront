@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PostService } from 'src/app/_services/post.service';
 import { Book } from '../../book/model/book';
+import { BookcontentService } from '../service/bookcontent.service';
 const tableName = 'BookContent';
 @Component({
   selector: 'app-create-book-content',
@@ -19,7 +19,7 @@ export class CreateBookContentComponent implements OnInit {
     bookId: []
   };
   isBookContentAdded = false;
-  constructor(private postService: PostService, private router: Router) {this.GetBookList(); }
+  constructor(private bookContentService: BookcontentService, private router: Router) {this.GetBookList(); }
 
   ngOnInit(): void {
   }
@@ -34,7 +34,7 @@ export class CreateBookContentComponent implements OnInit {
       return;
     }
 
-    this.postService.create(data, tableName).subscribe(() => {
+    this.bookContentService.create(data, tableName).subscribe(() => {
          console.log('bookcontent created successfully!');
          this.router.navigateByUrl('panel/bookContent');
     })
@@ -44,7 +44,7 @@ export class CreateBookContentComponent implements OnInit {
     this.router.navigateByUrl('panel/bookContent');
   }
   GetBookList(){
-    this.postService.getAll("Book")
+    this.bookContentService.getAll("Book")
       .subscribe(res => {
           this.books = res;
           console.log(res);

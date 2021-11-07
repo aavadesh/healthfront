@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
-import { PostService } from 'src/app/_services/post.service';
+import { AuthorService } from '../service/author.service';
 import { Book } from '../../book/model/book';
 import { Author } from '../model/author';
 const tableName = 'Author';
@@ -18,7 +18,7 @@ export class EditAuthorComponent implements OnInit {
   
   books: Book[] = [];
   ddlBook = "";
-  constructor(public postService: PostService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { 
+  constructor(public authorService: AuthorService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { 
     this.GetBookList();
   }
 
@@ -38,7 +38,7 @@ export class EditAuthorComponent implements OnInit {
     bookId: []
   });
   debugger
-  this.postService.findById(this.id, tableName, 'GetByAuthorId')
+  this.authorService.findById(this.id, tableName, 'GetByAuthorId')
     .subscribe( data => {
       debugger
     this.editForm.setValue(data);
@@ -48,7 +48,7 @@ export class EditAuthorComponent implements OnInit {
   submit(){
     debugger
     console.log(this.editForm.value);
-    this.postService.update(this.editForm.value, tableName).subscribe(res => { debugger
+    this.authorService.update(this.editForm.value, tableName).subscribe(res => { debugger
          console.log('Author updated successfully!');
          this.router.navigateByUrl('panel/author');
     })
@@ -59,7 +59,7 @@ export class EditAuthorComponent implements OnInit {
   }
   
   GetBookList(){ debugger
-    this.postService.getAll("Book")
+    this.authorService.getAll("Book")
       .subscribe(res => { debugger
           this.books = res;
           console.log(res);

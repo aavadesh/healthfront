@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
-import { PostService } from 'src/app/_services/post.service';
+import { BookcontentService } from '../service/bookcontent.service';
 import { Book } from '../../book/model/book';
 import { Bookcontent } from '../model/bookcontent';
 const tableName = 'BookContent';
@@ -18,7 +18,7 @@ export class EditBookContentComponent implements OnInit {
   
   books: Book[] = [];
   ddlCategory = "";
-  constructor(public postService: PostService,
+  constructor(public bookContentService: BookcontentService,
     private route: ActivatedRoute,
     private router: Router, private formBuilder: FormBuilder) { this.GetBookList();}
 
@@ -37,7 +37,7 @@ export class EditBookContentComponent implements OnInit {
     bookId: [],
     book: []
   });
-  this.postService.find(this.id, tableName)
+  this.bookContentService.find(this.id, tableName)
     .subscribe( data => {
       debugger
     this.editForm.setValue(data);
@@ -46,7 +46,7 @@ export class EditBookContentComponent implements OnInit {
   submit(){
     debugger
     console.log(this.editForm.value);
-    this.postService.update(this.editForm.value, tableName).subscribe(res => {
+    this.bookContentService.update(this.editForm.value, tableName).subscribe(res => {
          console.log('Book Content updated successfully!');
          this.router.navigateByUrl('panel/bookContent');
     })
@@ -57,7 +57,7 @@ export class EditBookContentComponent implements OnInit {
   }
   
   GetBookList(){
-    this.postService.getAll("Book")
+    this.bookContentService.getAll("Book")
       .subscribe(res => {
           this.books = res;
           console.log(res);

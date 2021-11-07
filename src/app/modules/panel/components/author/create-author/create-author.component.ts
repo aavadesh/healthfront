@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PostService } from 'src/app/_services/post.service';
 import { Book } from '../../book/model/book';
+import { AuthorService } from '../service/author.service';
 const tableName = 'Author';
 @Component({
   selector: 'app-create-author',
@@ -20,7 +20,7 @@ export class CreateAuthorComponent implements OnInit {
   };
   
   isAuthorAdded = false;
-  constructor(private postService: PostService, private router: Router) { this.GetBookList();}
+  constructor(private authorService: AuthorService, private router: Router) { this.GetBookList();}
 
   ngOnInit(): void {
   }
@@ -37,7 +37,7 @@ export class CreateAuthorComponent implements OnInit {
       return;
     }
     debugger
-    this.postService.create(data, tableName).subscribe(() => { debugger
+    this.authorService.create(data, tableName).subscribe(() => { debugger
          console.log('Author created successfully!');
          this.router.navigateByUrl('panel/author');
     })
@@ -47,7 +47,7 @@ export class CreateAuthorComponent implements OnInit {
     this.router.navigateByUrl('panel/author');
   }
   GetBookList(){ debugger
-    this.postService.getAll("Book")
+    this.authorService.getAll("Book")
       .subscribe(res => { debugger
           this.books = res;
           console.log(res);

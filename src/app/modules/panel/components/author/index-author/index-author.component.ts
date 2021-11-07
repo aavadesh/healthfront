@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
-import { PostService } from 'src/app/_services/post.service';
+import { AuthorService } from '../service/author.service';
 import { Author } from '../model/author';
 const tableName = 'Author';
 @Component({
@@ -22,13 +22,13 @@ export class IndexAuthorComponent implements OnInit {
 
   term!: string;
   event: any;
-  constructor(private postService: PostService, private router: Router) { }
+  constructor(private authorService: AuthorService, private router: Router) { }
 
   ngOnInit(): void {
     this.showData();
   }
   deleteBook(id: Guid){ debugger
-    this.postService.delete(id, tableName).subscribe(res => { debugger
+    this.authorService.delete(id, tableName).subscribe(res => { debugger
          this.authors = this.authors.filter(item => item.id !== id);
          console.log('Author deleted successfully!');
          this.router.navigateByUrl('panel/author');
@@ -37,7 +37,7 @@ export class IndexAuthorComponent implements OnInit {
   
   showData(): void {
     debugger
-    this.postService.getAllByRoute(tableName, 'GetAuthorAll')
+    this.authorService.getAllByRoute(tableName, 'GetAuthorAll')
         .subscribe( res => { debugger
             this.authors = res;
             console.log(res);

@@ -83,6 +83,13 @@ export class AppComponent implements OnInit, OnDestroy {
         emptyFilterMessage: "Nie znaleziono wyników",
       });
       this.isLoggedIn = !!this.tokenStorageService.getToken();
+      if ( this.isLoggedIn == true)
+      {
+        this.showAdminBoard = true;
+        this.isLoggedIn = true;
+        this.router.navigate(['panel/author']);
+      }
+      else {
       if (window.sessionStorage.getItem("User_Role") == Role.Admin)
       {
         this.showAdminBoard = true;
@@ -92,6 +99,7 @@ export class AppComponent implements OnInit, OnDestroy {
       {
         this.router.navigate(['front']);
       }
+    }
   }
 
     ngOnDestroy() {}

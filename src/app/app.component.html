@@ -1,44 +1,25 @@
 
-     <nav *ngIf="showUserBoard">
-        <div class='topnav'>
-                    <a href="#" (click)="onPanel()">Panel</a>
-                  
-                    <a href='#'>Backend</a>
-               
-                    <a href='#' routerLink='panel/testpage'>Search</a>
-                
-                    <a href='#'  routerLink='front/testpage'>Page One</a>
-               
-                    <a href='#' routerLink='front/testpage'>Test Page</a>
-        </div>
-      </nav>
-
-      <nav *ngIf="showAdminBoard">
-        <div class='topnav'>
-                   
-                    <a href="#" (click)="onFront()" routerLink="front"  >Front</a>
-                 
-                    <a routerLink="panel/author">Author</a>
-               
-                  <a routerLink='panel/book'>Book</a>
-              
-                <a routerLink='panel/bookContent'>Book Content</a>
-               
-                    <a routerLink='panel/category'>Category</a>
-              
-               
-                  <a href="/register" routerLink="register">Sign Up</a>
-               
-               
-                  <a href="/login" routerLink="login">Login</a>
-               
-                
-              
-                  <a href (click)="logout()">LogOut</a>
-              
-        </div>
-      </nav>
-
-      <br>
-  <router-outlet></router-outlet>
+<nav *ngIf="showUserBoard">
+  <div class='topnav'>
+      <a href="#" (click)="onPanel()">Panel</a>
+      <a href='#'>Backend</a>
+      <a href='#' routerLink='panel/testpage'>Search</a>
+      <a href='#'  routerLink='front/testpage'>Page One</a>
+      <a href='#' routerLink='front/testpage'>Test Page</a>
+  </div>
+</nav>
+<nav *ngIf="showAdminBoard">
+    <div class='topnav'>
+        <a href="#" (click)="onFront()" routerLink="front"  >Front</a>
+        <a routerLink="panel/author" *ngIf="isLoggedIn">Author</a>
+        <a routerLink='panel/book' *ngIf="isLoggedIn">Book</a>
+        <a routerLink='panel/bookContent' *ngIf="isLoggedIn">Book Content</a>
+        <a routerLink='panel/category' *ngIf="isLoggedIn">Category</a>
+        <a href="/register" routerLink="register" [hidden]="isLoggedIn">Sign Up</a>
+        <a href="/login" routerLink="login" [hidden]="isLoggedIn">Login</a>
+        <a href (click)="logout()" *ngIf="isLoggedIn">LogOut</a>
+    </div>
+</nav>
+<br>
+<router-outlet></router-outlet>
  

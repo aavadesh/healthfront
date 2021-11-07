@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PostService } from 'src/app/_services/post.service';
 import { Category } from '../model/category';
+import { CategoryService } from '../service/category.service';
 
 const tableName = 'Category';
 @Component({
@@ -17,7 +17,7 @@ export class CreateCategoryComponent implements OnInit {
   };
   
   isCategoryAdded = false;
-  constructor(private postService: PostService, private router: Router) {
+  constructor(private categoryService: CategoryService, private router: Router) {
    }
 
   ngOnInit(): void {  }
@@ -31,7 +31,7 @@ export class CreateCategoryComponent implements OnInit {
       return;
     }
 
-    this.postService.create(data, tableName).subscribe(() => {
+    this.categoryService.create(data, tableName).subscribe(() => {
          console.log('Category created successfully!');
          this.router.navigateByUrl('panel/category');
     })

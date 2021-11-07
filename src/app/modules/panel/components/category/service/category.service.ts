@@ -3,8 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Guid } from "guid-typescript";
-const AUTH_API = 'https://localhost:44353/api/';
-
+import { environment } from '../../../../../../environments/environment';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -12,65 +11,42 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-
-export class PostService {
-  
+export class CategoryService {
   constructor(private httpClient: HttpClient) { }
-
   getAll(tableName:string): Observable<any> {
-    return this.httpClient.get(`${AUTH_API}${tableName}`)
+    return this.httpClient.get(`${environment.AUTH_API}${tableName}`)
     .pipe(
       catchError(this.errorHandler)
     )
-  }
-  getAllByRoute(tableName:string, routeName:string): Observable<any> {
-    return this.httpClient.get(`${AUTH_API}${tableName}/${routeName}`)
-    .pipe(
-      catchError(this.errorHandler)
-    )
-  }
-     
+  }     
   create(post:any, tableName:string): Observable<any> {
     debugger
-    return this.httpClient.post(`${AUTH_API}${tableName}`, JSON.stringify(post), httpOptions)
+    return this.httpClient.post(`${environment.AUTH_API}${tableName}`, JSON.stringify(post), httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
-  }  
-     
-  findById(id:Guid, tableName:string, routeName:string): Observable<any> {
-    return this.httpClient.get(`${AUTH_API}${tableName}/${routeName}/${id}`)
-    .pipe(
-      catchError(this.errorHandler)
-    )
-  }
+  } 
 
   find(id:Guid, tableName:string): Observable<any> {
-    return this.httpClient.get(`${AUTH_API}${tableName}/${id}`)
+    return this.httpClient.get(`${environment.AUTH_API}${tableName}/${id}`)
     .pipe(
       catchError(this.errorHandler)
     )
   }
      
   update(data: any, tableName:string): Observable<any> {
-    return this.httpClient.put(`${AUTH_API}${tableName}`, JSON.stringify(data), httpOptions)
+    return this.httpClient.put(`${environment.AUTH_API}${tableName}`, JSON.stringify(data), httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
   }
      
   delete(id:Guid, tableName:string){
-    return this.httpClient.delete(`${AUTH_API}${tableName}/${id}`, httpOptions)
+    return this.httpClient.delete(`${environment.AUTH_API}${tableName}/${id}`, httpOptions)
 
     .pipe(
       catchError(this.errorHandler)
     )
-  }
-    // Search By Name
-  filterByName(name: any, tableName:string): Observable<any> {
-    return this.httpClient.get(`${AUTH_API}${tableName}?title_like=${name}`).pipe(
-      catchError(this.errorHandler)
-    );
   }
     
   errorHandler(error:any) {

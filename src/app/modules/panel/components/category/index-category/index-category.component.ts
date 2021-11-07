@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PostService } from 'src/app/_services/post.service';
+import { CategoryService } from '../service/category.service';
 import { Category } from '../model/category';
 import { Guid } from "guid-typescript";
 
@@ -25,16 +25,14 @@ export class IndexCategoryComponent implements OnInit {
   term!: string;
   event: any;
   
-  constructor(private postService: PostService, private router: Router) { }
+  constructor(private categoryService: CategoryService, private router: Router) { }
 
   ngOnInit(): void {
     this.showData();
 }
 
 deleteCategory(id: Guid){
-  debugger
-  this.postService.delete(id, tableName).subscribe(res => {
-    debugger
+  this.categoryService.delete(id, tableName).subscribe(res => {
        this.categories = this.categories.filter(item => item.id !== id);
        console.log('Category deleted successfully!');
        this.router.navigateByUrl('panel/category');
@@ -42,7 +40,7 @@ deleteCategory(id: Guid){
 }
 
 showData(): void {
-  this.postService.getAll(tableName)
+  this.categoryService.getAll(tableName)
       .subscribe(
         res => {
           this.categories = res;

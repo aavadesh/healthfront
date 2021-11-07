@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
-import { PostService } from 'src/app/_services/post.service';
+import { BookService } from '../service/book.service';
 import { Author } from '../../author/model/author';
 import { Category } from '../../category/model/category';
 import { Book } from '../model/book';
@@ -23,7 +23,7 @@ export class EditBookComponent implements OnInit {
   
   authors: Author[] = [];
   ddlAuthor = "";
-  constructor(public postService: PostService,
+  constructor(public bookService: BookService,
     private route: ActivatedRoute,
     private router: Router, private formBuilder: FormBuilder) { 
       this.GetCategoryList();
@@ -48,7 +48,7 @@ export class EditBookComponent implements OnInit {
     authorFullName: [],
     authorId: []
   });
-  this.postService.findById(this.id, tableName, 'GetByBookId')
+  this.bookService.findById(this.id, tableName, 'GetByBookId')
     .subscribe( data => {
       debugger
     this.editForm.setValue(data);
@@ -59,7 +59,7 @@ export class EditBookComponent implements OnInit {
   submit(){
     debugger
     console.log(this.editForm.value);
-    this.postService.update(this.editForm.value, tableName).subscribe(res => {
+    this.bookService.update(this.editForm.value, tableName).subscribe(res => {
          console.log('Book updated successfully!');
          this.router.navigateByUrl('panel/book');
     })
@@ -70,7 +70,7 @@ export class EditBookComponent implements OnInit {
   }
   
   GetCategoryList(){
-    this.postService.getAll("Category")
+    this.bookService.getAll("Category")
       .subscribe(res => {
           this.categories = res;
           console.log(res);
@@ -80,7 +80,7 @@ export class EditBookComponent implements OnInit {
         });
   }
   GetAuthorList(){
-    this.postService.getAll("Author")
+    this.bookService.getAll("Author")
       .subscribe(res => {
           this.authors = res;
           console.log(res);
