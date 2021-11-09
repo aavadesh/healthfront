@@ -13,36 +13,43 @@ const httpOptions = {
 })
 export class CategoryService {
   constructor(private httpClient: HttpClient) { }
+  
+  getAllByRoute(page: number, pageSize: number): Observable<any> {
+    return this.httpClient.get(`${environment.AUTH_API}Category/GetCategoryAll?page=${page}&&pageSize=${pageSize}`)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
   getAll(tableName:string): Observable<any> {
     return this.httpClient.get(`${environment.AUTH_API}${tableName}`)
     .pipe(
       catchError(this.errorHandler)
     )
-  }     
-  create(post:any, tableName:string): Observable<any> {
+  }
+  create(post:any): Observable<any> {
     debugger
-    return this.httpClient.post(`${environment.AUTH_API}${tableName}`, JSON.stringify(post), httpOptions)
+    return this.httpClient.post(`${environment.AUTH_API}Category`, JSON.stringify(post), httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
   } 
 
-  find(id:Guid, tableName:string): Observable<any> {
-    return this.httpClient.get(`${environment.AUTH_API}${tableName}/${id}`)
+  find(id:Guid): Observable<any> {
+    return this.httpClient.get(`${environment.AUTH_API}Category/${id}`)
     .pipe(
       catchError(this.errorHandler)
     )
   }
      
-  update(data: any, tableName:string): Observable<any> {
-    return this.httpClient.put(`${environment.AUTH_API}${tableName}`, JSON.stringify(data), httpOptions)
+  update(data: any): Observable<any> {
+    return this.httpClient.put(`${environment.AUTH_API}Category`, JSON.stringify(data), httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
   }
      
-  delete(id:Guid, tableName:string){
-    return this.httpClient.delete(`${environment.AUTH_API}${tableName}/${id}`, httpOptions)
+  delete(id:Guid){
+    return this.httpClient.delete(`${environment.AUTH_API}Category/${id}`, httpOptions)
 
     .pipe(
       catchError(this.errorHandler)

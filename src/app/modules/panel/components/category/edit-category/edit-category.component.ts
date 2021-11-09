@@ -36,7 +36,7 @@ export class EditCategoryComponent implements OnInit {
       slug: [],
       bookCategories: []
     });
-    this.categoryService.find(this.id, tableName)
+    this.categoryService.find(this.id)
       .subscribe( data => {
       this.editForm.setValue(data);
       this.editForm.controls['slug'].disable();
@@ -44,7 +44,7 @@ export class EditCategoryComponent implements OnInit {
   }
   submit(){
     console.log(this.editForm.value);
-    this.categoryService.update(this.editForm.value, tableName).subscribe(res => {
+    this.categoryService.update(this.editForm.value).subscribe(res => {
          console.log('Post updated successfully!');
          this.router.navigateByUrl('panel/category');
     })

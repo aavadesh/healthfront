@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { AuthorService } from '../service/author.service';
 import { Author } from '../model/author';
+import { PaginationInstance } from 'ngx-pagination/dist/pagination-instance';
 const tableName = 'Author';
 @Component({
   selector: 'app-index-author',
@@ -12,43 +13,43 @@ const tableName = 'Author';
 export class IndexAuthorComponent implements OnInit {
   authors: Author[] = [];
 
-  currentIndex = -1;
-  title = '';
+  page: number = 1;
+  total: number = 10;
+  loading: boolean = false;
+  filterTerm!: string;
 
-  page = 1;
-  count = 0;
-  pageSize = 10;
-  pageSizes = [5, 10, 15];
-
-  term!: string;
-  event: any;
+  public config: PaginationInstance = {
+    id: 'server',
+    itemsPerPage: 5,
+    currentPage: this.page,
+    totalItems: this.total
+  };
   constructor(private authorService: AuthorService, private router: Router) { }
 
   ngOnInit(): void {
-    this.showData();
+    this.showData(1);
   }
   deleteBook(id: Guid){ debugger
-    this.authorService.delete(id, tableName).subscribe(res => { debugger
+    this.authorService.delete(id).subscribe(res => { debugger
          this.authors = this.authors.filter(item => item.id !== id);
          console.log('Author deleted successfully!');
          this.router.navigateByUrl('panel/author');
     })
   }
   
-  showData(): void {
+  showData(page: any): void {
     debugger
-    this.authorService.getAllByRoute(tableName, 'GetAuthorAll')
+    this.page = page;
+    this.loading = true;
+    this.authorService.getAllByRoute(page, this.config.itemsPerPage)
         .subscribe( res => { debugger
-            this.authors = res;
-            console.log(res);
+            this.authors = res.results; 
+            this.config.currentPage = page;
+            this.total = res.rowCount;
+            this.loading = false;
           },
           err => { 
             console.log(err);
           });
-  }
-  
-  handlePageChange(event: number) {
-    this.page = event;
-    this.showData();
   }
 }

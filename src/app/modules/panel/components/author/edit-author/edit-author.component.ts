@@ -38,7 +38,7 @@ export class EditAuthorComponent implements OnInit {
     bookId: []
   });
   debugger
-  this.authorService.findById(this.id, tableName, 'GetByAuthorId')
+  this.authorService.find(this.id)
     .subscribe( data => {
       debugger
     this.editForm.setValue(data);
@@ -48,7 +48,7 @@ export class EditAuthorComponent implements OnInit {
   submit(){
     debugger
     console.log(this.editForm.value);
-    this.authorService.update(this.editForm.value, tableName).subscribe(res => { debugger
+    this.authorService.update(this.editForm.value).subscribe(res => { debugger
          console.log('Author updated successfully!');
          this.router.navigateByUrl('panel/author');
     })

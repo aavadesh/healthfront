@@ -42,7 +42,7 @@ export class CreateBookComponent implements OnInit {
       return;
     }
 
-    this.bookService.create(data, tableName).subscribe(() => {
+    this.bookService.create(data).subscribe(() => {
          console.log('book created successfully!');
          this.router.navigateByUrl('panel/book');
     })

@@ -20,44 +20,44 @@ export class AuthorService {
       catchError(this.errorHandler)
     )
   }
-  getAllByRoute(tableName:string, routeName:string): Observable<any> {
-    return this.httpClient.get(`${environment.AUTH_API}${tableName}/${routeName}`)
-    .pipe(
-      catchError(this.errorHandler)
-    )
-  }
-     
-  create(post:any, tableName:string): Observable<any> {
-    debugger
-    return this.httpClient.post(`${environment.AUTH_API}${tableName}`, JSON.stringify(post), httpOptions)
+  getAllByRoute(page: number, pageSize: number): Observable<any> {
+    return this.httpClient.get(`${environment.AUTH_API}Author/GetAuthorAll?page=${page}&&pageSize=${pageSize}`)
     .pipe(
       catchError(this.errorHandler)
     )
   }  
      
-  findById(id:Guid, tableName:string, routeName:string): Observable<any> {
-    return this.httpClient.get(`${environment.AUTH_API}${tableName}/${routeName}/${id}`)
+  create(post:any): Observable<any> {
+    debugger
+    return this.httpClient.post(`${environment.AUTH_API}Author`, JSON.stringify(post), httpOptions)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }  
+     
+  findById(id:Guid, routeName:string): Observable<any> {
+    return this.httpClient.get(`${environment.AUTH_API}Author/${routeName}/${id}`)
     .pipe(
       catchError(this.errorHandler)
     )
   }
 
-  find(id:Guid, tableName:string): Observable<any> {
-    return this.httpClient.get(`${environment.AUTH_API}${tableName}/${id}`)
+  find(id:Guid): Observable<any> {
+    return this.httpClient.get(`${environment.AUTH_API}Author/${id}`)
     .pipe(
       catchError(this.errorHandler)
     )
   }
      
-  update(data: any, tableName:string): Observable<any> {
-    return this.httpClient.put(`${environment.AUTH_API}${tableName}`, JSON.stringify(data), httpOptions)
+  update(data: any): Observable<any> {
+    return this.httpClient.put(`${environment.AUTH_API}Author`, JSON.stringify(data), httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
   }
      
-  delete(id:Guid, tableName:string){
-    return this.httpClient.delete(`${environment.AUTH_API}${tableName}/${id}`, httpOptions)
+  delete(id:Guid){
+    return this.httpClient.delete(`${environment.AUTH_API}Author/${id}`, httpOptions)
 
     .pipe(
       catchError(this.errorHandler)

@@ -46,7 +46,7 @@ export class EditBookContentComponent implements OnInit {
   submit(){
     debugger
     console.log(this.editForm.value);
-    this.bookContentService.update(this.editForm.value, tableName).subscribe(res => {
+    this.bookContentService.update(this.editForm.value).subscribe(res => {
          console.log('Book Content updated successfully!');
          this.router.navigateByUrl('panel/bookContent');
     })

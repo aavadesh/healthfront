@@ -15,7 +15,7 @@
           </div>
           <div class="col-sm">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="term">
+              <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="filterTerm">
        </div>
           </div>
         </div>
@@ -30,8 +30,7 @@
             <th scope="col" width="220px">Action</th>
           </tr>
         </thead> <tbody>
-          <tr *ngFor=" let content of bookContent | filter:term | paginate : { itemsPerPage: pageSize, currentPage: page, totalItems: count };
-          let i = index" [class.active]="i == currentIndex">
+          <tr *ngFor=" let content of bookContent | filter:filterTerm | paginate: config">
             <td>{{ content.bookName }}</td>
             <td>{{ content.content }}</td>
             <td>{{ content.pageNumber }}</td>
@@ -44,12 +43,12 @@
         </table>
       </div>
         <div class="row">
-          <div class="col-8">
+          <div class="col-6">
           </div>
-          <div class="col-4">
+          <div class="col-6">
             
         <div class="d-flex justify-content-center">
-          <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="handlePageChange($event)">
+          <pagination-controls (pageChange)="showData($event)" id="server">
           </pagination-controls>
           </div>
         </div>

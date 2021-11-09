@@ -37,7 +37,7 @@ export class CreateAuthorComponent implements OnInit {
       return;
     }
     debugger
-    this.authorService.create(data, tableName).subscribe(() => { debugger
+    this.authorService.create(data).subscribe(() => { debugger
          console.log('Author created successfully!');
          this.router.navigateByUrl('panel/author');
     })

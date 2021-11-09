@@ -31,7 +31,7 @@ export class CreateCategoryComponent implements OnInit {
       return;
     }
 
-    this.categoryService.create(data, tableName).subscribe(() => {
+    this.categoryService.create(data).subscribe(() => {
          console.log('Category created successfully!');
          this.router.navigateByUrl('panel/category');
     })
