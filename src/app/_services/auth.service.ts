@@ -22,13 +22,12 @@ export class AuthService {
     }, httpOptions);
   }
 
-  register(email: string, password: string, confirmPassword: string, Nationality: string): Observable<any> {
+  register(email: string, password: string, confirmPassword: string): Observable<any> {
     debugger
     return this.http.post(`${environment.AUTH_API}Account/signup`, {
       email,
       password,
-      confirmPassword,
-      Nationality
+      confirmPassword
     }, httpOptions);
   }
 }

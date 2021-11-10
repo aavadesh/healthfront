@@ -54,6 +54,7 @@ export class CreateBookComponent implements OnInit {
   GetCategoryList(){
     this.bookService.getAll("Category")
       .subscribe(res => {
+        debugger
           this.categories = res;
           console.log(res);
         },

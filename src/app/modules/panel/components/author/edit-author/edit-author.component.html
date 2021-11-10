@@ -2,14 +2,14 @@
     <h4>Update Author</h4>
   
     <form [formGroup]="editForm" (ngSubmit)="submit()">
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="title">Select Book:</label>
             <select formControlName="bookId" class="custom-select">
                 <option *ngFor="let item of books" [value]="item.id">
                     {{item.name}}
                   </option>
               </select>
-          </div>
+          </div> -->
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" formControlName="name" placeholder="Name" name="name" class="form-control" id="name">

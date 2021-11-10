@@ -16,10 +16,10 @@ export class EditAuthorComponent implements OnInit {
   author!: Author;
   editForm!: FormGroup;
   
-  books: Book[] = [];
-  ddlBook = "";
+  //books: Book[] = [];
+  // ddlBook = "";
   constructor(public authorService: AuthorService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { 
-    this.GetBookList();
+    // this.GetBookList();
   }
 
   ngOnInit(): void {
@@ -33,9 +33,9 @@ export class EditAuthorComponent implements OnInit {
     id: [],
     name: ['', Validators.required],
     surname: [],
-    slug: [],
-    bookName: [],
-    bookId: []
+    slug: []//,
+   // bookName: [],
+   // bookId: []
   });
   debugger
   this.authorService.find(this.id)
@@ -58,14 +58,14 @@ export class EditAuthorComponent implements OnInit {
     this.router.navigateByUrl('panel/author');
   }
   
-  GetBookList(){ debugger
-    this.authorService.getAll("Book")
-      .subscribe(res => { debugger
-          this.books = res;
-          console.log(res);
-        },
-        err => { 
-          console.log(err);
-        });
-  }
+  // GetBookList(){ debugger
+  //   this.authorService.getAll("Book")
+  //     .subscribe(res => { debugger
+  //         this.books = res;
+  //         console.log(res);
+  //       },
+  //       err => { 
+  //         console.log(err);
+  //       });
+  // }
 }

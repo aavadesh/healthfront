@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NavigationEnd, Router } from '@angular/router';
 import { TokenStorageService } from './_services/token-storage.service';
 import { PrimeNGConfig } from "primeng/api";
-import { SelectorListContext } from "@angular/compiler";
 import { Role } from "./model/role";
 
 @Component({
@@ -22,6 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
     router.events.subscribe(event => {
 
       if (event instanceof NavigationEnd ) {
+        debugger
         if (event.url == "/front")
         {
           this.showUserBoard = true;
@@ -82,6 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
         emptyMessage: "Nie znaleziono wyników",
         emptyFilterMessage: "Nie znaleziono wyników",
       });
+      debugger
       this.isLoggedIn = !!this.tokenStorageService.getToken();
       if ( this.isLoggedIn == true)
       {

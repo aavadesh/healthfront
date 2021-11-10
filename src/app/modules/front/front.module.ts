@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { FrontRoutingModule } from './front-routing.module';
 import { TestPageComponent } from './components/test-page/test-page.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
-    TestPageComponent
+    TestPageComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
