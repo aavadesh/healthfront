@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
       if (event instanceof NavigationEnd ) {
         debugger
-        if (event.url == "/front")
+        if (event.url == "/front" || event.urlAfterRedirects == "/front")
         {
           this.showUserBoard = true;
           this.showAdminBoard = false;

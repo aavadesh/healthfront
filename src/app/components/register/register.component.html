@@ -4,12 +4,12 @@
       <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
        
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="email">Email Address</label>
           <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required email #email="ngModel" />
           <div class="alert-danger" *ngIf="email.errors && f.submitted">
-            <div *ngIf="email.errors.required">Email is required</div>
+            <div *ngIf="email.errors.required">Email address is required</div>
             <div *ngIf="email.errors.email">
-              Email must be a valid email address
+              Email address must be a valid
             </div>
           </div>
         </div>
@@ -27,9 +27,9 @@
           <label for="password">Confirm Password</label>
           <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="form.confirmPassword" required minlength="6" #confirmPassword="ngModel" />
           <div class="alert-danger" *ngIf="confirmPassword.errors && f.submitted">
-            <div *ngIf="confirmPassword.errors.required">confirmPassword is required</div>
+            <div *ngIf="confirmPassword.errors.required">Confirm Password is required</div>
             <div *ngIf="confirmPassword.errors.minlength">
-              Password must be at least 6 characters
+              Confirm Password must be at least 6 characters
             </div>
           </div>
         </div>
