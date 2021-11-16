@@ -21,7 +21,6 @@ export class AppComponent implements OnInit, OnDestroy {
     router.events.subscribe(event => {
 
       if (event instanceof NavigationEnd ) {
-        debugger
         if (event.url == "/front" || event.urlAfterRedirects == "/front")
         {
           this.showUserBoard = true;
@@ -82,7 +81,6 @@ export class AppComponent implements OnInit, OnDestroy {
         emptyMessage: "Nie znaleziono wyników",
         emptyFilterMessage: "Nie znaleziono wyników",
       });
-      debugger
       this.isLoggedIn = !!this.tokenStorageService.getToken();
       if ( this.isLoggedIn == true)
       {

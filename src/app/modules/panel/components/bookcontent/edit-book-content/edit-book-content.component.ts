@@ -32,7 +32,7 @@ export class EditBookContentComponent implements OnInit {
   }
   this.editForm = this.formBuilder.group({
     id: [],
-    content: ['', Validators.required],
+    content: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
     pageNumber: [],
     bookId: [],
     book: []

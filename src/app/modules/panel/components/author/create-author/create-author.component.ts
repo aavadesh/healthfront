@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { Book } from '../../book/model/book';
@@ -12,34 +13,34 @@ const tableName = 'Author';
 export class CreateAuthorComponent implements OnInit {
   //books: Book[] = [];
   //ddlBook = "";
-
-  form: any = {
-    name: null,
-    surName: null,
-    slug: null //,
-    //bookId: []
-  };
+  //books: Book[] = [];
+  //ddlBook = "";
+  form!: FormGroup;
+  submitted = false;
   
   isAuthorAdded = false;
-  constructor(private authorService: AuthorService, private router: Router) { 
+  constructor(private authorService: AuthorService, private router: Router, private formBuilder: FormBuilder) { 
    // this.GetBookList();
   }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
+      surName: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]]
+  });
   }
+  // convenience getter for easy access to form fields
+  get f() { return this.form.controls; }
+
   onSubmit(): void {
+    this.submitted = true;
+
+        // stop here if form is invalid
+        if (this.form.invalid) {
+            return;
+        }
     debugger
-    const data = {
-      name: this.form.name,
-      surName: this.form.surName,
-      slug: this.form.slug,
-    };
-    if (!data.name) {
-      alert('Please add Author name!');
-      return;
-    }
-    debugger
-    this.authorService.create(data).subscribe(() => { debugger
+    this.authorService.create(this.form.value).subscribe(() => { debugger
          console.log('Author created successfully!');
          this.router.navigateByUrl('panel/author');
     })
@@ -48,14 +49,4 @@ export class CreateAuthorComponent implements OnInit {
   onCancel(): void {
     this.router.navigateByUrl('panel/author');
   }
-  // GetBookList(){ debugger
-  //   this.authorService.getAll("Book")
-  //     .subscribe(res => { debugger
-  //         this.books = res;
-  //         console.log(res);
-  //       },
-  //       err => { 
-  //         console.log(err);
-  //       });
-  // }
 }

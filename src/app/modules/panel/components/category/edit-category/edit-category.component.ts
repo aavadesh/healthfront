@@ -5,7 +5,6 @@ import { CategoryService } from '../service/category.service';
 import { Category } from '../model/category';
 import { Guid } from 'guid-typescript';
 
-const tableName = 'Category';
 
 @Component({
   selector: 'app-edit-category',
@@ -16,7 +15,8 @@ export class EditCategoryComponent implements OnInit {
 
   id!: Guid;
   category!: Category;
-  editForm!: FormGroup;;
+  form!: FormGroup;
+  submitted = false;
   
   constructor( public categoryService: CategoryService,
     private route: ActivatedRoute,
@@ -30,21 +30,29 @@ export class EditCategoryComponent implements OnInit {
       this.router.navigateByUrl('panel/category');
       return;
     }
-    this.editForm = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       id: [],
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
       slug: [],
       bookCategories: []
     });
     this.categoryService.find(this.id)
       .subscribe( data => {
-      this.editForm.setValue(data);
-      this.editForm.controls['slug'].disable();
+      this.form.setValue(data);
+      this.form.controls['slug'].disable();
       });
   }
-  submit(){
-    console.log(this.editForm.value);
-    this.categoryService.update(this.editForm.value).subscribe(res => {
+   // convenience getter for easy access to form fields
+   get f() { return this.form.controls; }
+  onSubmit(){
+    this.submitted = true;
+
+        // stop here if form is invalid
+        if (this.form.invalid) {
+            return;
+        }
+        debugger
+    this.categoryService.update(this.form.value).subscribe(res => {
          console.log('Post updated successfully!');
          this.router.navigateByUrl('panel/category');
     })

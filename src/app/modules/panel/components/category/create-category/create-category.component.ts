@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Category } from '../model/category';
 import { CategoryService } from '../service/category.service';
 
-const tableName = 'Category';
 @Component({
   selector: 'app-create-category',
   templateUrl: './create-category.component.html',
@@ -11,27 +11,32 @@ const tableName = 'Category';
 })
 export class CreateCategoryComponent implements OnInit {
   categories: Category[] = [];
-
-  form: any = {
-    name: null
-  };
+  form!: FormGroup;
+  submitted = false;
   
   isCategoryAdded = false;
-  constructor(private categoryService: CategoryService, private router: Router) {
+  constructor(private categoryService: CategoryService, private router: Router, private formBuilder: FormBuilder) {
    }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void { 
+    this.form = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]]
+  });
+}
+ // convenience getter for easy access to form fields
+ get f() { return this.form.controls; }
 
   onSubmit(): void {
-    const data = {
-      name: this.form.name
-    };
-    if (!data.name) {
-      alert('Please add category name!');
-      return;
-    }
+    debugger
+    this.submitted = true;
 
-    this.categoryService.create(data).subscribe(() => {
+        // stop here if form is invalid
+        if (this.form.invalid) {
+            return;
+        }
+
+
+    this.categoryService.create(this.form.value).subscribe(() => {
          console.log('Category created successfully!');
          this.router.navigateByUrl('panel/category');
     })

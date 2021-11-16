@@ -15,13 +15,13 @@ export class IndexBookContentComponent implements OnInit {
   bookContent: Bookcontent[] = [];
 
   page: number = 1;
-  total: number = 10;
+  total: number = 2;
   loading: boolean = false;
   filterTerm!: string;
 
   public config: PaginationInstance = {
     id: 'server',
-    itemsPerPage: 3,
+    itemsPerPage: 15,
     currentPage: this.page,
     totalItems: this.total
   };

@@ -14,8 +14,8 @@ const tableName = 'Author';
 export class EditAuthorComponent implements OnInit {
   id!: Guid;
   author!: Author;
-  editForm!: FormGroup;
-  
+  form!: FormGroup;
+  submitted = false;
   //books: Book[] = [];
   // ddlBook = "";
   constructor(public authorService: AuthorService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { 
@@ -29,26 +29,37 @@ export class EditAuthorComponent implements OnInit {
     this.router.navigateByUrl('panel/book');
     return;
   }
-  this.editForm = this.formBuilder.group({
+  this.form = this.formBuilder.group({
     id: [],
-    name: ['', Validators.required],
-    surname: [],
+    name: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
+    surname: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
     slug: []//,
    // bookName: [],
    // bookId: []
   });
+
+  
   debugger
   this.authorService.find(this.id)
     .subscribe( data => {
       debugger
-    this.editForm.setValue(data);
-    this.editForm.controls['slug'].disable();
+    this.form.setValue(data);
+    this.form.controls['slug'].disable();
     });
   }
-  submit(){
+   // convenience getter for easy access to form fields
+   get f() { return this.form.controls; }
+
+  onSubmit(){
     debugger
-    console.log(this.editForm.value);
-    this.authorService.update(this.editForm.value).subscribe(res => { debugger
+    this.submitted = true;
+
+        // stop here if form is invalid
+        if (this.form.invalid) {
+            return;
+        }
+    console.log(this.form.value);
+    this.authorService.update(this.form.value).subscribe(res => { debugger
          console.log('Author updated successfully!');
          this.router.navigateByUrl('panel/author');
     })

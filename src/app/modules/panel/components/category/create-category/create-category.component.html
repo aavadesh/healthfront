@@ -1,16 +1,24 @@
 <div class="container">
     <h4>Add Category</h4>
-    <div *ngIf="!isCategoryAdded">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <label for="title">Name:</label>
-          <input type="text" class="form-control" id="name" required [(ngModel)]="form.name" name="name" />
+          <label for="title">Category:</label>
+          <input type="text" formControlName="name" class="form-control" 
+          [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.name.errors.required">Category is required</div>
+                        </div>
+                        <div *ngIf="form.get('name')?.hasError('pattern')" class="invalid-feedback">
+                          Space is not allow
+                        </div>
         </div>
+       
 
         <div class="form-group">
-            <button class="btn btn-success" (click)="onSubmit()"> Save </button>
+            <button class="btn btn-success"> Save </button>
            <button type="button" class="btn btn-warning" (click)="onCancel()">Cancel</button>
           </div>
-      </div>
+      </form>
   
       <div *ngIf="isCategoryAdded">
         <h3>New category added!</h3>

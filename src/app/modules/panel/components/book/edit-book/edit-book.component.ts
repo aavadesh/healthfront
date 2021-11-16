@@ -16,13 +16,13 @@ export class EditBookComponent implements OnInit {
   
   id!: Guid;
   book!: Book;
-  editForm!: FormGroup;
+  form!: FormGroup;
   
   categories: Category[] = [];
   ddlCategory = "";
   
+  submitted = false;
   authors: Author[] = [];
-  ddlAuthor = "";
   constructor(public bookService: BookService,
     private route: ActivatedRoute,
     private router: Router, private formBuilder: FormBuilder) { 
@@ -38,33 +38,44 @@ export class EditBookComponent implements OnInit {
     this.router.navigateByUrl('panel/book');
     return;
   }
-  this.editForm = this.formBuilder.group({
+  this.form = this.formBuilder.group({
     id: [],
-    name: ['', Validators.required],
+    name: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
     slug: [],
     slugName: [],
     categoryName: [],
-    categoryId: [],
+    categoryId: ['', Validators.required],
+    authorId: ['', [Validators.required]],
     authorFullName: [],
-    authorId: []
   });
   this.bookService.find(this.id)
     .subscribe( data => {
       debugger
-    this.editForm.setValue(data);
-    this.editForm.controls['slug'].disable();
-    this.editForm.controls['slugName'].disable();
+    this.form.setValue(data);
+    this.form.controls['slug'].disable();
+    this.form.controls['slugName'].disable();
     });
   }
-  submit(){
-    debugger
-    console.log(this.editForm.value);
-    this.bookService.update(this.editForm.value).subscribe(res => {
+  /* Select Dropdown error handling */
+  public handleError = (controlName: string, errorName: string) => {
+    return this.form.controls[controlName].hasError(errorName);
+  }
+  onSubmit(){
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.form.invalid) {
+        return;
+    }
+    console.log(this.form.value);
+    this.bookService.update(this.form.value).subscribe(res => {
          console.log('Book updated successfully!');
          this.router.navigateByUrl('panel/book');
     })
   }
-
+ // convenience getter for easy access to form fields
+ get f() { return this.form.controls; }
+ 
   onCancel(): void {
     this.router.navigateByUrl('panel/book');
   }

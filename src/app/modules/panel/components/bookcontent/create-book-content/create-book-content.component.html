@@ -1,33 +1,47 @@
 <div class="container">
     <h4>Add Book Content</h4>
-    <div *ngIf="!isBookContentAdded">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="title">Select Book:</label>
-        <select class="custom-select" name="ddlBook" [(ngModel)]="form.bookId" #ddlBook="ngModel" 
-        [ngClass]="{ 'is-invalid': form.submitted && ddlBook.invalid }" required>
+        <select class="custom-select" name="bookId" formControlName="bookId">
           <option value="" class="text-primary font-weight-bolder">
             --- Select Book ---
           </option>
-          <option *ngFor="let book of books" [value]="book.id">
-            {{book.name}}
+          <option *ngFor="let item of books" [value]="item.id">
+            {{item.name}}
           </option>
         </select>
+        <div class="text-danger" *ngIf="submitted && handleError('bookId', 'required')">
+          Book is Required
+        </div>
       </div>
       <div class="form-group">
       <label for="title">Book Content:</label>
-        <textarea class="form-control" id="content" required [(ngModel)]="form.content" name="content"></textarea>
+      <textarea maxlength="8000" formControlName="content" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.content.errors }"></textarea>
+      <div *ngIf="submitted && f.content.errors" class="invalid-feedback">
+          <div *ngIf="f.content.errors.required">Content is required!</div>
+      </div>
+      <div *ngIf="f.content.errors?.minlength">
+        content maximum 8000 characters
+      </div>
+      <div *ngIf="form.get('content')?.hasError('pattern')" class="invalid-feedback">
+        Space is not allow
+      </div>
     </div>
     <div class="form-group">
         <label for="title">Page Number:</label>
-        <input type="number" class="form-control" id="pageNumber" required [(ngModel)]="form.pageNumber" name="pageNumber" />
+        <input type="number" formControlName="pageNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pageNumber.errors }" />
+      <div *ngIf="submitted && f.pageNumber.errors" class="invalid-feedback">
+          <div *ngIf="f.pageNumber.errors.required">Page Number is required!</div>
       </div>
+    </div>
        
 
         <div class="form-group">
-            <button class="btn btn-success" (click)="onSubmit()"> Save </button>
+            <button class="btn btn-success"> Save </button>
            <button type="button" class="btn btn-warning" (click)="onCancel()">Cancel</button>
           </div>
-      </div>
+    </form>
   
       <div *ngIf="isBookContentAdded">
         <h3>New BookContent added!</h3>

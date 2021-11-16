@@ -1,14 +1,19 @@
 <div class="container">
     <h4>Add Book</h4>
-    <div *ngIf="!isBookAdded">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-group">
-      <label for="title">Name:</label>
-      <input type="text" class="form-control" id="name" required [(ngModel)]="form.name" name="name" />
+      <label for="title">Book Name:</label>
+      <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+      <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+          <div *ngIf="f.name.errors.required">Book Name is required!</div>
+      </div>
+      <div *ngIf="form.get('name')?.hasError('pattern')" class="invalid-feedback">
+        Space is not allow
+      </div>
     </div>
         <div class="form-group">
           <label for="title">Select Category:</label>
-          <select class="custom-select" name="DDCategory" [(ngModel)]="form.categoryId" #DDCategory="ngModel" 
-          [ngClass]="{ 'is-invalid': form.submitted && DDCategory.invalid }" required>
+          <select class="custom-select" name="categoryid" formControlName="categoryid">
             <option value="" class="text-primary font-weight-bolder">
               --- Select Category ---
             </option>
@@ -16,11 +21,13 @@
               {{item.name}}
             </option>
           </select>
+          <div class="text-danger" *ngIf="submitted && handleError('categoryid', 'required')">
+            Category is Required
+          </div>
         </div>
         <div class="form-group">
           <label for="title">Select Author:</label>
-          <select class="custom-select" name="ddlAuthor" [(ngModel)]="form.authorId" #ddlAuthor="ngModel" 
-          [ngClass]="{ 'is-invalid': form.submitted && ddlAuthor.invalid }" required>
+          <select class="custom-select" name="authorid" formControlName="authorid">
             <option value="" class="text-primary font-weight-bolder">
               --- Select Author ---
             </option>
@@ -28,12 +35,15 @@
               {{item.name}}
             </option>
           </select>
+          <div class="text-danger" *ngIf="submitted && handleError('authorid', 'required')">
+            Author is Required
+          </div>
         </div>
         <div class="form-group">
-            <button class="btn btn-success" (click)="onSubmit()"> Save </button>
+            <button class="btn btn-success"> Save </button>
            <button type="button" class="btn btn-warning" (click)="onCancel()">Cancel</button>
           </div>
-      </div>
+      </form>
   
       <div *ngIf="isBookAdded">
         <h3>New book added!</h3>
