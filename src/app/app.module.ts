@@ -14,6 +14,11 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import {NgxPaginationModule} from 'ngx-pagination';  
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { OnepageComponent } from './components/onepage/onepage.component';
+import { ConfirmDialogModule} from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+
 
 @NgModule({
   declarations: [
@@ -29,9 +34,10 @@ import { OnepageComponent } from './components/onepage/onepage.component';
     FormsModule,
     HttpClientModule,
     NgxPaginationModule,
-    Ng2SearchPipeModule 
+    Ng2SearchPipeModule,
+    ConfirmDialogModule, ToastModule, ButtonModule
   ],
-  providers: [authInterceptorProviders],
+  providers: [authInterceptorProviders, ConfirmationService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

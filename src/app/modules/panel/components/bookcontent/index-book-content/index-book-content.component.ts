@@ -4,6 +4,7 @@ import { Guid } from 'guid-typescript';
 import { BookcontentService } from '../service/bookcontent.service';
 import { Bookcontent } from '../model/bookcontent';
 import { PaginationInstance } from 'ngx-pagination/dist/pagination-instance';
+import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 
 const tableName = 'BookContent';
 @Component({
@@ -25,17 +26,42 @@ export class IndexBookContentComponent implements OnInit {
     currentPage: this.page,
     totalItems: this.total
   };
-  constructor(private bookContentService: BookcontentService, private router: Router) { }
+  constructor(private bookContentService: BookcontentService, private router: Router,
+    private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.showData(1);
   }
-  deleteContent(id: Guid){debugger
-    this.bookContentService.delete(id).subscribe(res => {debugger
-         this.bookContent = this.bookContent.filter(item => item.id !== id);
-         console.log('BookContent deleted successfully!');
-         this.router.navigateByUrl('panel/bookContent');
-    })
+  onDelete(id: Guid, elementName: string){debugger
+   
+    this.confirmationService.confirm({
+      message: `Do you want to delete ${elementName}?`,
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+          
+
+       this.bookContentService.delete(id).subscribe( (data)=>{
+       // this.bookContent = this.bookContent.filter(u => u.id !== id);
+       setTimeout(() => {
+        this.messageService.add({ key: 'myKey1', severity:'info', summary:'Confirmed', detail:'Record deleted'});
+      }, 500);
+        
+        this.showData(1);
+      },(error)=>{
+      } );
+      },
+      reject: (type: any) => {
+          switch(type) {
+              case ConfirmEventType.REJECT:
+                  this.messageService.add({key: 'myKey1', severity:'error', summary:'Rejected', detail:'You have rejected'});
+              break;
+              case ConfirmEventType.CANCEL:
+                  this.messageService.add({key: 'myKey1', severity:'warn', summary:'Cancelled', detail:'You have cancelled'});
+              break;
+          }
+      }
+  });
   }
   
   showData(page: any): void {
@@ -43,6 +69,7 @@ export class IndexBookContentComponent implements OnInit {
     this.loading = true;
     this.bookContentService.getAllByRoute(page, this.config.itemsPerPage)
         .subscribe( res => {
+          debugger
           this.config.currentPage = page;
           this.bookContent = res.results;
           this.total = res.rowCount;

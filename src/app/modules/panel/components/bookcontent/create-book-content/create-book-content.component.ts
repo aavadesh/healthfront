@@ -15,9 +15,12 @@ export class CreateBookContentComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
   isBookContentAdded = false;
+  errorMessage = '';
+  
+  isFailed = false;
   constructor(private bookContentService: BookcontentService, private router: Router, private formBuilder: FormBuilder) {this.GetBookList(); 
     this.form = this.formBuilder.group({
-      content: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
+      content: ['', [Validators.required, Validators.maxLength(8000)]],
       pageNumber: ['', Validators.required],
       bookName: [''],
       bookId: ['', [Validators.required]]
@@ -36,7 +39,15 @@ export class CreateBookContentComponent implements OnInit {
 
     this.bookContentService.create(this.form.value).subscribe(() => {
          console.log('bookcontent created successfully!');
+         this.isFailed = false;
          this.router.navigateByUrl('panel/bookContent');
+    },err => {
+      debugger
+      if (err.includes("409"))
+      {        
+        this.isFailed = true;
+        this.errorMessage = "The given book and page number already exists in the database.";
+      }
     })
   }
   get f() { return this.form.controls; }

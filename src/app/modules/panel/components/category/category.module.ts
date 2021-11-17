@@ -9,6 +9,10 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import {  } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfirmDialogModule} from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [CreateCategoryComponent, EditCategoryComponent, IndexCategoryComponent],
@@ -16,7 +20,10 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     CategoryRoutingModule,
     FormsModule,
-    ReactiveFormsModule, HttpClientModule, NgxPaginationModule,Ng2SearchPipeModule  
-  ]
+    ReactiveFormsModule, HttpClientModule, NgxPaginationModule,Ng2SearchPipeModule, 
+    ConfirmDialogModule,
+    ToastModule, ButtonModule
+  ],
+  providers: [ConfirmationService, MessageService ],
 })
 export class CategoryModule { }

@@ -9,15 +9,19 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { IndexAuthorComponent } from './index-author/index-author.component';
 import {  } from '@angular/forms';
-
-
+import { ConfirmDialogModule} from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
 @NgModule({
   declarations: [CreateAuthorComponent, EditAuthorComponent, IndexAuthorComponent],
   imports: [
     CommonModule,
     AuthorRoutingModule,
     FormsModule,
-    ReactiveFormsModule, HttpClientModule, NgxPaginationModule,Ng2SearchPipeModule
-  ]
+    ReactiveFormsModule, HttpClientModule, NgxPaginationModule,Ng2SearchPipeModule, 
+    ConfirmDialogModule, ToastModule, ButtonModule
+  ],
+  providers: [ConfirmationService, MessageService ],
 })
 export class AuthorModule { }

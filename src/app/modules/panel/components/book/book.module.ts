@@ -9,6 +9,10 @@ import { BookRoutingModule } from './book-routing.module';
 import { CreateBookComponent } from './create-book/create-book.component';
 import { IndexBookComponent } from './index-book/index-book.component';
 import { EditBookComponent } from './edit-book/edit-book.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
 
 
 @NgModule({
@@ -21,7 +25,10 @@ import { EditBookComponent } from './edit-book/edit-book.component';
     CommonModule,
     BookRoutingModule,
     FormsModule,
-    ReactiveFormsModule, HttpClientModule, NgxPaginationModule,Ng2SearchPipeModule  
-  ]
+    ReactiveFormsModule, HttpClientModule, NgxPaginationModule,Ng2SearchPipeModule,
+    ConfirmDialogModule,
+    ToastModule, ButtonModule
+  ],
+  providers: [ConfirmationService, MessageService ],
 })
 export class BookModule { }

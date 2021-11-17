@@ -1,22 +1,42 @@
 <div class="container">
     <h4>Update Book Content</h4>
   
-    <form [formGroup]="editForm" (ngSubmit)="submit()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="title">Select Book:</label>
-            <select formControlName="bookId" class="custom-select">
+
+              <select class="custom-select" name="bookId" formControlName="bookId">
+                <option value="" class="text-primary font-weight-bolder">
+                  --- Select Book ---
+                </option>
                 <option *ngFor="let item of books" [value]="item.id">
-                    {{item.name}}
-                  </option>
+                  {{item.name}}
+                </option>
               </select>
+              <div class="text-danger" *ngIf="submitted && handleError('bookId', 'required')">
+                Book is Required
+              </div>
+
           </div>
         <div class="form-group">
             <label for="content">Book Content:</label>
-            <textarea type="text" formControlName="content" placeholder="content" name="content" class="form-control" id="content"></textarea>
+            <textarea maxlength="8000" formControlName="content" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.content.errors }"></textarea>
+            <div *ngIf="submitted && f.content.errors" class="invalid-feedback">
+                <div *ngIf="f.content.errors.required">Content is required!</div>
+            </div>
+            <div *ngIf="f.content.errors?.minlength">
+                content maximum 8000 characters
+            </div>
+            <div *ngIf="form.get('content')?.hasError('pattern')" class="invalid-feedback">
+                Space is not allow
+            </div>
         </div>
         <div class="form-group">
             <label for="body">Page Number:</label>
-            <input type="number" formControlName="pageNumber" placeholder="pageNumber" name="pageNumber" class="form-control" id="pageNumber">
+            <input type="number" formControlName="pageNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pageNumber.errors }" />
+            <div *ngIf="submitted && f.pageNumber.errors" class="invalid-feedback">
+                <div *ngIf="f.pageNumber.errors.required">Page Number is required!</div>
+            </div>
         </div>
         <button class="btn btn-primary" type="submit">Update</button>
         

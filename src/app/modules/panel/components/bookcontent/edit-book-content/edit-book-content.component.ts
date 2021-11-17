@@ -14,13 +14,22 @@ const tableName = 'BookContent';
 export class EditBookContentComponent implements OnInit {
   id!: Guid;
   bookContent!: Bookcontent;
-  editForm!: FormGroup;
+  form!: FormGroup;
+  submitted = false;
   
   books: Book[] = [];
   ddlCategory = "";
   constructor(public bookContentService: BookcontentService,
     private route: ActivatedRoute,
-    private router: Router, private formBuilder: FormBuilder) { this.GetBookList();}
+    private router: Router, private formBuilder: FormBuilder) { this.GetBookList();
+      this.form = this.formBuilder.group({
+        id: [],
+        book: [],
+        content: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
+        pageNumber: ['', Validators.required],
+        bookId: ['', [Validators.required]]
+    });
+    }
 
   ngOnInit(): void {
     debugger
@@ -30,28 +39,34 @@ export class EditBookContentComponent implements OnInit {
     this.router.navigateByUrl('panel/bookContent');
     return;
   }
-  this.editForm = this.formBuilder.group({
-    id: [],
-    content: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
-    pageNumber: [],
-    bookId: [],
-    book: []
-  });
+
   this.bookContentService.find(this.id, tableName)
     .subscribe( data => {
       debugger
-    this.editForm.setValue(data);
+    this.form.setValue(data);
     });
   }
-  submit(){
+  onSubmit(){
     debugger
-    console.log(this.editForm.value);
-    this.bookContentService.update(this.editForm.value).subscribe(res => {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.form.invalid) {
+        return;
+    }
+
+    console.log(this.form.value);
+    this.bookContentService.update(this.form.value).subscribe(res => {
          console.log('Book Content updated successfully!');
          this.router.navigateByUrl('panel/bookContent');
     })
   }
+  get f() { return this.form.controls; }
 
+  /* Select Dropdown error handling */
+  public handleError = (controlName: string, errorName: string) => {
+    return this.form.controls[controlName].hasError(errorName);
+  }
   onCancel(): void {
     this.router.navigateByUrl('panel/bookContent');
   }
