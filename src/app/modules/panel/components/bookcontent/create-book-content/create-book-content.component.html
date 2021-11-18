@@ -3,7 +3,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="title">Select Book:</label>
-        <select class="custom-select" name="bookId" formControlName="bookId">
+        <select class="custom-select" name="bookId" formControlName="bookId" (change)="onChange($event)">
           <option value="" class="text-primary font-weight-bolder">
             --- Select Book ---
           </option>

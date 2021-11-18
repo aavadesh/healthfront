@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -18,7 +17,6 @@ import { ConfirmDialogModule} from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
-
 
 @NgModule({
   declarations: [
@@ -35,7 +33,10 @@ import { ButtonModule } from 'primeng/button';
     HttpClientModule,
     NgxPaginationModule,
     Ng2SearchPipeModule,
-    ConfirmDialogModule, ToastModule, ButtonModule
+    ConfirmDialogModule, 
+    ToastModule, 
+    ButtonModule,
+    BrowserAnimationsModule
   ],
   providers: [authInterceptorProviders, ConfirmationService, MessageService],
   bootstrap: [AppComponent]

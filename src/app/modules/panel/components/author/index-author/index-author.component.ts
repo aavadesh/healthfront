@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { AuthorService } from '../service/author.service';
 import { Author } from '../model/author';
-import { PaginationInstance } from 'ngx-pagination/dist/pagination-instance';
 import {ConfirmationService, ConfirmEventType, MessageService} from 'primeng/api';
 const tableName = 'Author';
 @Component({
@@ -13,18 +12,11 @@ const tableName = 'Author';
 })
 export class IndexAuthorComponent implements OnInit {
   authors: Author[] = [];
+  p!: number;
+  itemsPerPage = 15;
+  totalItems: any;
+  filterTerm!: string;  
 
-  page: number = 1;
-  total: number = 2;
-  loading: boolean = false;
-  filterTerm!: string;
-
-  public config: PaginationInstance = {
-    id: 'server',
-    itemsPerPage: 15,
-    currentPage: this.page,
-    totalItems: this.total
-  };
   constructor(private authorService: AuthorService, private router: Router,
     private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
@@ -57,17 +49,21 @@ export class IndexAuthorComponent implements OnInit {
   }
   
   showData(page: any): void {
-    this.page = page;
-    this.loading = true;
-    this.authorService.getAllByRoute(page, this.config.itemsPerPage)
-        .subscribe( res => { 
-            this.authors = res.results; 
-            this.config.currentPage = page;
-            this.total = res.rowCount;
-            this.loading = false;
+    this.authorService.getAllByRoute(page, this.itemsPerPage)
+        .subscribe( res => {
+          this.authors = res.results;
+          this.totalItems = res.rowCount;
           },
           err => { 
             console.log(err);
           });
+  }
+  getPage(page: any) {
+    this.authorService.getAllByRoute(page, this.itemsPerPage)
+    .subscribe(x => {
+      this.authors =  x.results;
+      this.totalItems = x.rowCount;
+
+    })
   }
 }

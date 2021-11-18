@@ -16,6 +16,7 @@ export class CreateBookContentComponent implements OnInit {
   submitted = false;
   isBookContentAdded = false;
   errorMessage = '';
+  selectBook!: '';
   
   isFailed = false;
   constructor(private bookContentService: BookcontentService, private router: Router, private formBuilder: FormBuilder) {this.GetBookList(); 
@@ -38,15 +39,15 @@ export class CreateBookContentComponent implements OnInit {
     }
 
     this.bookContentService.create(this.form.value).subscribe(() => {
-         console.log('bookcontent created successfully!');
          this.isFailed = false;
          this.router.navigateByUrl('panel/bookContent');
     },err => {
       debugger
       if (err.includes("409"))
       {        
+        debugger
         this.isFailed = true;
-        this.errorMessage = "The given book and page number already exists in the database.";
+        this.errorMessage = `${this.selectBook} of the book already exists in the database.`;
       }
     })
   }
@@ -56,7 +57,12 @@ export class CreateBookContentComponent implements OnInit {
   public handleError = (controlName: string, errorName: string) => {
     return this.form.controls[controlName].hasError(errorName);
   }
-
+  public onChange(event: any): void {  // event will give you full breif of action
+    debugger
+    let selectElementText = event.target['options']
+      [event.target['options'].selectedIndex].text;
+      this.selectBook = selectElementText;  
+  }
 
   onCancel(): void {
     this.router.navigateByUrl('panel/bookContent');

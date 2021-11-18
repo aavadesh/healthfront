@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { CategoryService } from '../service/category.service';
 import { Category } from '../model/category';
 import { Guid } from "guid-typescript";
-import { PaginationInstance } from 'ngx-pagination/dist/pagination-instance';
 import {ConfirmationService, ConfirmEventType, MessageService} from 'primeng/api';
 @Component({
   selector: 'app-index-category',
@@ -12,17 +11,11 @@ import {ConfirmationService, ConfirmEventType, MessageService} from 'primeng/api
 })
 export class IndexCategoryComponent implements OnInit {
   public categories!: Category[];
-  page: number = 1;
-  total: number = 2;
-  loading: boolean = false;
   filterTerm!: string;  
-  confirmDropDatabaseDialogVisible = false;
-  public config: PaginationInstance = {
-    id: 'server',
-    itemsPerPage: 15,
-    currentPage: this.page,
-    totalItems: this.total
-  };
+  p!: number;
+  itemsPerPage = 15;
+  totalItems: any;
+  
   constructor(private categoryService: CategoryService, private router: Router,
     private confirmationService: ConfirmationService, private messageService: MessageService) { }
   ngOnInit(): void {
@@ -54,17 +47,23 @@ deleteCategory(id: Guid, elementName: string){
 
 }
 showData(page: any): void {
-  this.page = page;
-  this.loading = true;
-  this.categoryService.getAllByRoute(page, this.config.itemsPerPage)
+ debugger
+  this.categoryService.getAllByRoute(page, this.itemsPerPage)
       .subscribe(x => {
-          this.config.currentPage = page;
           this.categories = x.results;
-          this.total = x.rowCount;
-          this.loading = false;
+          this.totalItems = x.rowCount;
         },
         err => {
           console.log(err);
         });
+      }
+
+      getPage(page: any) {debugger
+        this.categoryService.getAllByRoute(page, this.itemsPerPage)
+        .subscribe(x => {debugger
+          this.categories =  x.results;
+          this.totalItems = x.rowCount;
+    
+        })
       }
 }

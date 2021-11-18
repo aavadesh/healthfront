@@ -14,33 +14,25 @@ const tableName = 'BookContent';
 })
 export class IndexBookContentComponent implements OnInit {
   bookContent: Bookcontent[] = [];
-
-  page: number = 1;
-  total: number = 2;
-  loading: boolean = false;
+  p!: number;
+  itemsPerPage = 15;
+  totalItems: any;
   filterTerm!: string;
 
-  public config: PaginationInstance = {
-    id: 'server',
-    itemsPerPage: 15,
-    currentPage: this.page,
-    totalItems: this.total
-  };
+  
   constructor(private bookContentService: BookcontentService, private router: Router,
     private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.showData(1);
   }
-  onDelete(id: Guid, elementName: string){debugger
+  onDelete(id: Guid, elementName: string){
    
     this.confirmationService.confirm({
       message: `Do you want to delete ${elementName}?`,
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       accept: () => {
-          
-
        this.bookContentService.delete(id).subscribe( (data)=>{
        // this.bookContent = this.bookContent.filter(u => u.id !== id);
        setTimeout(() => {
@@ -65,19 +57,21 @@ export class IndexBookContentComponent implements OnInit {
   }
   
   showData(page: any): void {
-    this.page = page;
-    this.loading = true;
-    this.bookContentService.getAllByRoute(page, this.config.itemsPerPage)
+    this.bookContentService.getAllByRoute(page, this.itemsPerPage)
         .subscribe( res => {
-          debugger
-          this.config.currentPage = page;
           this.bookContent = res.results;
-          this.total = res.rowCount;
-          this.loading = false;
-            console.log(res);
+          this.totalItems = res.rowCount;
           },
           err => { 
             console.log(err);
           });
+  }
+  getPage(page: any) {debugger
+    this.bookContentService.getAllByRoute(page, this.itemsPerPage)
+    .subscribe(x => {debugger
+      this.bookContent =  x.results;
+      this.totalItems = x.rowCount;
+
+    })
   }
 }

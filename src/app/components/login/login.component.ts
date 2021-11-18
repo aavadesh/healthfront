@@ -41,7 +41,14 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['panel/author']);
     },
     error => {
+      debugger
+      if (error.status == 0)
+      {
+        this.errorMessage = "The Service did not Respond";
+      }
+      else{
     this.errorMessage = error.error;
+      }
     this.isLoginFailed = true;
     });
   }

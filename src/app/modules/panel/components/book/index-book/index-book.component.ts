@@ -16,18 +16,11 @@ const tableName = 'Book';
 export class IndexBookComponent implements OnInit {
   books: Book[] = [];
 
-  page: number = 1;
-  total: number = 2;
-  loading: boolean = false;
+  p!: number;
+  itemsPerPage = 15;
+  totalItems: any;
   filterTerm!: string;
 
-  public config: PaginationInstance = {
-    id: 'server',
-    itemsPerPage: 15,
-    currentPage: this.page,
-    totalItems: this.total
-  };
-  
   constructor(private bookService: BookService, private router: Router,
     private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
@@ -61,17 +54,23 @@ export class IndexBookComponent implements OnInit {
   }
   
   showData(page: any): void {
-    this.page = page;
-  this.loading = true;
-    this.bookService.getAllByRoute(page, this.config.itemsPerPage)
+    this.bookService.getAllByRoute(page, this.itemsPerPage)
         .subscribe( res => {
-          this.config.currentPage = page;
+        debugger
           this.books = res.results;
-          this.total = res.rowCount;
-          this.loading = false;
+          this.totalItems = res.rowCount;
           },
           err => { 
             console.log(err);
           });
+  }
+  getPage(page: any) {
+    debugger
+    this.bookService.getAllByRoute(page, this.itemsPerPage)
+        .subscribe( res => {
+          debugger
+          this.books = res.results;
+          this.totalItems = res.rowCount;
+    })
   }
 }

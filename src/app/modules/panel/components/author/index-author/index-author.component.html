@@ -36,7 +36,7 @@
             <th scope="col" width="220px">Action</th>
           </tr>
         </thead> <tbody>
-          <tr *ngFor=" let item of authors | filter:filterTerm | paginate: config">
+          <tr *ngFor=" let item of authors | filter:filterTerm | paginate: { itemsPerPage: itemsPerPage , currentPage: p, totalItems: totalItems }">
             <td>{{ item.name }}</td>
             <td>{{ item.surname }}</td>
             <td>{{ item.slug }}</td>
@@ -55,8 +55,7 @@
           <div class="col-6">
             
         <div class="d-flex justify-content-center">
-          <pagination-controls (pageChange)="showData($event)" id="server">
-          </pagination-controls>
+          <pagination-controls (pageChange)="getPage(p = $event)"></pagination-controls>
           </div>
         </div>
       </div>
