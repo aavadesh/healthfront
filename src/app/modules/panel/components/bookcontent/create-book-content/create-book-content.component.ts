@@ -17,11 +17,11 @@ export class CreateBookContentComponent implements OnInit {
   isBookContentAdded = false;
   errorMessage = '';
   selectBook!: '';
-  
+  nonWhitespaceRegExp: RegExp = new RegExp("\\S");
   isFailed = false;
   constructor(private bookContentService: BookcontentService, private router: Router, private formBuilder: FormBuilder) {this.GetBookList(); 
     this.form = this.formBuilder.group({
-      content: ['', [Validators.required, Validators.maxLength(8000)]],
+      content: ['', [Validators.required, Validators.maxLength(8000),  Validators.pattern(this.nonWhitespaceRegExp)]],
       pageNumber: ['', Validators.required],
       bookName: [''],
       bookId: ['', [Validators.required]]

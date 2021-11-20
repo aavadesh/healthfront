@@ -20,7 +20,7 @@ export class EditBookComponent implements OnInit {
   
   categories: Category[] = [];
   ddlCategory = "";
-  
+  nonWhitespaceRegExp: RegExp = new RegExp("\\S");
   submitted = false;
   authors: Author[] = [];
   constructor(public bookService: BookService,
@@ -40,7 +40,7 @@ export class EditBookComponent implements OnInit {
   }
   this.form = this.formBuilder.group({
     id: [],
-    name: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
+    name: ['', [Validators.required, Validators.pattern(this.nonWhitespaceRegExp)]],
     slug: [],
     slugName: [],
     categoryName: [],

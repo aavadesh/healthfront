@@ -16,7 +16,7 @@ export class EditBookContentComponent implements OnInit {
   bookContent!: Bookcontent;
   form!: FormGroup;
   submitted = false;
-  
+  nonWhitespaceRegExp: RegExp = new RegExp("\\S");
   books: Book[] = [];
   ddlCategory = "";
   constructor(public bookContentService: BookcontentService,
@@ -25,7 +25,7 @@ export class EditBookContentComponent implements OnInit {
       this.form = this.formBuilder.group({
         id: [],
         book: [],
-        content: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
+        content: ['', [Validators.required, Validators.maxLength(8000),  Validators.pattern(this.nonWhitespaceRegExp)]],
         pageNumber: ['', Validators.required],
         bookId: ['', [Validators.required]]
     });

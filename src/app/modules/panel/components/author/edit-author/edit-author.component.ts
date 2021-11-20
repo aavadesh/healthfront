@@ -16,6 +16,7 @@ export class EditAuthorComponent implements OnInit {
   author!: Author;
   form!: FormGroup;
   submitted = false;
+  nonWhitespaceRegExp: RegExp = new RegExp("\\S");
   //books: Book[] = [];
   // ddlBook = "";
   constructor(public authorService: AuthorService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { 
@@ -31,8 +32,8 @@ export class EditAuthorComponent implements OnInit {
   }
   this.form = this.formBuilder.group({
     id: [],
-    name: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
-    surname: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
+    name: ['', [Validators.required, Validators.pattern(this.nonWhitespaceRegExp)]],
+    surname: ['', [Validators.required, Validators.pattern(this.nonWhitespaceRegExp)]],
     slug: []//,
    // bookName: [],
    // bookId: []

@@ -16,12 +16,13 @@ export class CreateBookComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
   isBookAdded = false;
+  nonWhitespaceRegExp: RegExp = new RegExp("\\S");
   constructor(private bookService: BookService, private router: Router, private formBuilder: FormBuilder) { 
     this.GetCategoryList();
     this.GetAuthorList();
 
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
+      name: ['', [Validators.required, Validators.pattern(this.nonWhitespaceRegExp)]],
       categoryid: ['', Validators.required],
       authorid: ['', [Validators.required]],
       slug: [''],

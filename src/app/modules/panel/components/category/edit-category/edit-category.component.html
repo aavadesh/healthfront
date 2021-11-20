@@ -9,9 +9,11 @@
                 <div *ngIf="f.name.errors.required">Category is required</div>
             </div>
             
-            <div *ngIf="form.get('name')?.hasError('pattern')" class="invalid-feedback">
-                Space is not allow
-              </div>
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div class="text-danger" *ngIf="form.controls['name'].hasError('pattern')">
+                  Whitespace is not allowed!
+                </div>
+              </div> 
         </div>
 
         <div class="form-group">

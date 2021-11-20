@@ -6,10 +6,11 @@
       <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
       <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
           <div *ngIf="f.name.errors.required">Book Name is required!</div>
-      </div>
-      <div *ngIf="form.get('name')?.hasError('pattern')" class="invalid-feedback">
-        Space is not allow
-      </div>
+      </div><div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+        <div class="text-danger" *ngIf="form.controls['name'].hasError('pattern')">
+          Whitespace is not allowed!
+        </div>
+      </div> 
     </div>
         <div class="form-group">
           <label for="title">Select Category:</label>

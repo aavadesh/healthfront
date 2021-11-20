@@ -8,9 +8,11 @@
             <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                 <div *ngIf="f.name.errors.required">Name is required!</div>
             </div>
-            <div *ngIf="form.get('name')?.hasError('pattern')" class="invalid-feedback">
-                Space is not allowed!
-              </div>
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div class="text-danger" *ngIf="form.controls['name'].hasError('pattern')">
+                  Whitespace is not allowed!
+                </div>
+              </div> 
         </div>
         <div class="form-group">
             <label for="name">Surname:</label>
@@ -18,9 +20,11 @@
             <div *ngIf="submitted && f.surname.errors" class="invalid-feedback">
                 <div *ngIf="f.surname.errors.required">Sure Name is required!</div>
             </div>
-            <div *ngIf="form.get('surname')?.hasError('pattern')" class="invalid-feedback">
-                Space is not allowed!
-              </div>
+            <div *ngIf="submitted && f.surname.errors" class="invalid-feedback">
+                <div class="text-danger" *ngIf="form.controls['surname'].hasError('pattern')">
+                  Whitespace is not allowed!
+                </div>
+              </div> 
         </div>
         <div class="form-group">
             <label for="body">Slug:</label>

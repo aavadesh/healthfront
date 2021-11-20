@@ -12,7 +12,14 @@ export class SearchService {
   constructor(private httpClient: HttpClient) { }
 
   getAllByRoute(page: number, pageSize: number): Observable<any> {
-    return this.httpClient.get(`${environment.AUTH_API}Category/GetCategoryAll?page=${page}&&pageSize=${pageSize}`)
+    return this.httpClient.get(`${environment.AUTH_API}BookContent/Search?page=${page}&&pageSize=${pageSize}`)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+  getAllBySearch(search: string): Observable<any> {
+    debugger
+    return this.httpClient.get(`${environment.AUTH_API}BookContent/Search?q=${search}`)
     .pipe(
       catchError(this.errorHandler)
     )

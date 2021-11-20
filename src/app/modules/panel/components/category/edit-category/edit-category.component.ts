@@ -17,7 +17,7 @@ export class EditCategoryComponent implements OnInit {
   category!: Category;
   form!: FormGroup;
   submitted = false;
-  
+  nonWhitespaceRegExp: RegExp = new RegExp("\\S");
   constructor( public categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router, private formBuilder: FormBuilder) { 
@@ -32,7 +32,7 @@ export class EditCategoryComponent implements OnInit {
     }
     this.form = this.formBuilder.group({
       id: [],
-      name: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
+      name: ['', [Validators.required, Validators.pattern(this.nonWhitespaceRegExp)]],
       slug: [],
       bookCategories: []
     });

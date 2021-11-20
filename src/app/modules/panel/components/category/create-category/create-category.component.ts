@@ -13,14 +13,14 @@ export class CreateCategoryComponent implements OnInit {
   categories: Category[] = [];
   form!: FormGroup;
   submitted = false;
-  
+  nonWhitespaceRegExp: RegExp = new RegExp("\\S");
   isCategoryAdded = false;
   constructor(private categoryService: CategoryService, private router: Router, private formBuilder: FormBuilder) {
    }
 
   ngOnInit(): void { 
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]]
+      name: ['', [Validators.required, Validators.pattern(this.nonWhitespaceRegExp)]]
   });
 }
  // convenience getter for easy access to form fields

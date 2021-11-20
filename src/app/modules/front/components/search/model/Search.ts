@@ -1,7 +1,9 @@
 import { Guid } from "guid-typescript";
 
 export interface Search {
-    id: Guid;
-    name: string;
-    slug: string;
+    bookId: Guid;
+    authorName: string;
+    authorSurName: string;
+    bookName: string;
+    pagesNumber: string;
 }

@@ -1,1 +1,53 @@
-<p>search-list works!</p>
+
+  <div class="container">
+      <div class="col-md-12"> 
+        <div class="row">
+          <div class="col-sm">
+          <h4>Search</h4>
+        </div>
+      </div>
+      <br>
+          <div class="row">
+            <div class="col-md-9">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search here"
+                    [(ngModel)]="searchPhase"/>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="input-group">
+                <button class="btn btn-outline-secondary" type="button" (click)="onClick()">
+                    Search
+                </button>
+              </div>
+            </div>
+        
+          
+        </div>
+          <br>
+          <div class="row">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">Author - Book</th>
+              <th scope="col">Page/Pages</th>
+            </tr>
+          </thead> <tbody>
+            <tr *ngFor=" let item of searchList | filter:filterTerm | paginate: { itemsPerPage: itemsPerPage , currentPage: p, totalItems: totalItems }">
+              <td>{{ item.authorName }} {{ item.authorSurname }} - {{ item.bookName }}</td>
+              <td>{{ item.pagesNumber }}</td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+          <!-- <div class="row">
+            <div class="col-6">
+            </div>
+            <div class="col-6">
+              
+          <div class="d-flex justify-content-center">
+            <pagination-controls (pageChange)="getPage(p = $event)"></pagination-controls>
+            </div>
+          </div>
+        </div> -->
+        </div>

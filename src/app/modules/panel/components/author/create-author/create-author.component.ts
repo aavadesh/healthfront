@@ -17,7 +17,7 @@ export class CreateAuthorComponent implements OnInit {
   //ddlBook = "";
   form!: FormGroup;
   submitted = false;
-  
+  nonWhitespaceRegExp: RegExp = new RegExp("\\S");
   isAuthorAdded = false;
   constructor(private authorService: AuthorService, private router: Router, private formBuilder: FormBuilder) { 
    // this.GetBookList();
@@ -25,8 +25,8 @@ export class CreateAuthorComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]],
-      surName: ['', [Validators.required, Validators.pattern(/^((?!\s{2,}).)*$/)]]
+      name: ['', [Validators.required, Validators.pattern(this.nonWhitespaceRegExp)]],
+      surName: ['', [Validators.required, Validators.pattern(this.nonWhitespaceRegExp)]]
   });
   }
   // convenience getter for easy access to form fields
