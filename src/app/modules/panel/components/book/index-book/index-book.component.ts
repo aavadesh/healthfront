@@ -35,11 +35,14 @@ export class IndexBookComponent implements OnInit {
       icon: 'pi pi-info-circle',
       accept: () => {
             this.bookService.delete(id).subscribe(res => {
-              this.books = this.books.filter(item => item.id !== id);
-              this.messageService.add({ key: 'myKey1', severity:'info', summary:'Confirmed', detail:'Record deleted'});
-              this.router.navigateByUrl('panel/book');
-        })
-      },
+              setTimeout(() => {
+                this.messageService.add({ key: 'myKey1', severity:'info', summary:'Confirmed', detail:'Record deleted'});
+              }, 500);
+                
+                this.showData(this.p);
+              },(error)=>{
+              } );
+              },
       reject: (type: any) => {
           switch(type) {
               case ConfirmEventType.REJECT:

@@ -28,11 +28,14 @@ deleteCategory(id: Guid, elementName: string){
     icon: 'pi pi-info-circle',
     accept: () => {
         this.categoryService.delete(id).subscribe(res => {
-                  this.categories = this.categories.filter(item => item.id !== id);
-                  this.messageService.add({key: 'myKey1', severity:'info', summary:'Confirmed', detail:'Record deleted'});
-                  this.router.navigateByUrl('panel/category');
-        })
-    },
+          setTimeout(() => {
+            this.messageService.add({ key: 'myKey1', severity:'info', summary:'Confirmed', detail:'Record deleted'});
+          }, 500);
+            
+            this.showData(1);
+          },(error)=>{
+          } );
+          },
     reject: (type: any) => {
         switch(type) {
             case ConfirmEventType.REJECT:

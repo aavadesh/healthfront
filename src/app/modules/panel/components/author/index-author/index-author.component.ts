@@ -30,11 +30,14 @@ export class IndexAuthorComponent implements OnInit {
       icon: 'pi pi-info-circle',
       accept: () => {
             this.authorService.delete(id).subscribe(res => { 
-              this.authors = this.authors.filter(item => item.id !== id);
-              this.messageService.add({ key: 'myKey1', severity:'info', summary:'Confirmed', detail:'Record deleted'});
-              this.router.navigateByUrl('panel/author');
-        })
-      },
+              setTimeout(() => {
+                this.messageService.add({ key: 'myKey1', severity:'info', summary:'Confirmed', detail:'Record deleted'});
+              }, 500);
+                
+                this.showData(this.p);
+              },(error)=>{
+              } );
+              },
       reject: (type: any) => {
           switch(type) {
               case ConfirmEventType.REJECT:
