@@ -32,7 +32,7 @@ deleteCategory(id: Guid, elementName: string){
             this.messageService.add({ key: 'myKey1', severity:'info', summary:'Confirmed', detail:'Record deleted'});
           }, 500);
             
-            this.showData(1);
+            this.showData(this.p);
           },(error)=>{
           } );
           },

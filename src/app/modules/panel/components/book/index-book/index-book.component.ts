@@ -41,7 +41,7 @@ export class IndexBookComponent implements OnInit {
                 
                 this.showData(this.p);
               },(error)=>{
-              } );
+              });
               },
       reject: (type: any) => {
           switch(type) {
