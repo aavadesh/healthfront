@@ -15,14 +15,17 @@ export class SearchListComponent implements OnInit {
   totalItems: any;
   filterTerm!: string;
   searchPhase = '';
+  searchStrig!: string;
 
   constructor(private searchService: SearchService, private router: Router) { }
 
   ngOnInit(): void {
   }
   onClick() {
+   // searchStrig : encodeURI(this.searchPhase)
     debugger
-    this.searchService.getAllBySearch(this.searchPhase)
+    let encodedName = btoa(this.searchPhase);
+    this.searchService.getAllBySearch(encodedName)
       .subscribe(res => {
           this.searchList = res;
           // this.totalItems = res.rowCount;
