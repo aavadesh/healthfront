@@ -15,7 +15,8 @@ export class IndexAuthorComponent implements OnInit {
   p!: number;
   itemsPerPage = 15;
   totalItems: any;
-  filterTerm!: string;  
+  filterTerm!: string; 
+  currentPage!: number; 
 
   constructor(private authorService: AuthorService, private router: Router,
     private confirmationService: ConfirmationService, private messageService: MessageService) { }
@@ -34,7 +35,7 @@ export class IndexAuthorComponent implements OnInit {
                 this.messageService.add({ key: 'myKey1', severity:'info', summary:'Confirmed', detail:'Record deleted'});
               }, 500);
                 
-                this.showData(this.p);
+                this.showData(this.currentPage);
               },(error)=>{
               } );
               },
@@ -56,6 +57,7 @@ export class IndexAuthorComponent implements OnInit {
         .subscribe( res => {
           this.authors = res.results;
           this.totalItems = res.rowCount;
+          this.currentPage = res.currentPage;
           },
           err => { 
             console.log(err);
@@ -63,10 +65,10 @@ export class IndexAuthorComponent implements OnInit {
   }
   getPage(page: any) {
     this.authorService.getAllByRoute(page, this.itemsPerPage)
-    .subscribe(x => {
-      this.authors =  x.results;
-      this.totalItems = x.rowCount;
-
+    .subscribe(res => {
+      this.authors =  res.results;
+      this.totalItems = res.rowCount;
+      this.currentPage = res.currentPage;
     })
   }
 }

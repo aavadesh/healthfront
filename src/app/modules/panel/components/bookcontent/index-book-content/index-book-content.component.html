@@ -42,8 +42,8 @@
             <td>{{ item.pageNumber }}</td>
             <td>
               <p-toast key="myKey1" position="top-right"></p-toast>
-              <button pButton type="button" href="#" routerLink="edit/{{item.bookId}}" label="Edit" ></button>
-              <button (click)="onDelete(item.bookId, item.name)" pButton type="button" label="Delete" class="p-button-danger"></button>
+              <button pButton type="button" href="#" routerLink="edit/{{item.id}}" label="Edit" ></button>
+              <button (click)="onDelete(item.id, item.name)" pButton type="button" label="Delete" class="p-button-danger"></button>
             </td>
           </tr>
         </tbody>

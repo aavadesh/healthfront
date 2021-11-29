@@ -15,6 +15,7 @@ export class IndexCategoryComponent implements OnInit {
   p!: number;
   itemsPerPage = 15;
   totalItems: any;
+  currentPage!: number;
   
   constructor(private categoryService: CategoryService, private router: Router,
     private confirmationService: ConfirmationService, private messageService: MessageService) { }
@@ -28,11 +29,12 @@ deleteCategory(id: Guid, elementName: string){
     icon: 'pi pi-info-circle',
     accept: () => {
         this.categoryService.delete(id).subscribe(res => {
+          debugger
           setTimeout(() => {
             this.messageService.add({ key: 'myKey1', severity:'info', summary:'Confirmed', detail:'Record deleted'});
           }, 500);
             
-            this.showData(this.p);
+            this.showData(this.currentPage);
           },(error)=>{
           } );
           },
@@ -55,6 +57,7 @@ showData(page: any): void {
       .subscribe(x => {
           this.categories = x.results;
           this.totalItems = x.rowCount;
+          this.currentPage = x.currentPage;
         },
         err => {
           console.log(err);
@@ -66,7 +69,7 @@ showData(page: any): void {
         .subscribe(x => {debugger
           this.categories =  x.results;
           this.totalItems = x.rowCount;
-    
+          this.currentPage = x.currentPage;
         })
       }
 }

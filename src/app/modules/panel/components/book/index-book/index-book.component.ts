@@ -20,6 +20,7 @@ export class IndexBookComponent implements OnInit {
   itemsPerPage = 15;
   totalItems: any;
   filterTerm!: string;
+  currentPage!: number;
 
   constructor(private bookService: BookService, private router: Router,
     private confirmationService: ConfirmationService, private messageService: MessageService) { }
@@ -39,7 +40,7 @@ export class IndexBookComponent implements OnInit {
                 this.messageService.add({ key: 'myKey1', severity:'info', summary:'Confirmed', detail:'Record deleted'});
               }, 500);
                 
-                this.showData(this.p);
+                this.showData(this.currentPage);
               },(error)=>{
               });
               },
@@ -59,9 +60,9 @@ export class IndexBookComponent implements OnInit {
   showData(page: any): void {
     this.bookService.getAllByRoute(page, this.itemsPerPage)
         .subscribe( res => {
-        debugger
           this.books = res.results;
           this.totalItems = res.rowCount;
+          this.currentPage = res.currentPage;
           },
           err => { 
             console.log(err);
@@ -71,9 +72,9 @@ export class IndexBookComponent implements OnInit {
     debugger
     this.bookService.getAllByRoute(page, this.itemsPerPage)
         .subscribe( res => {
-          debugger
           this.books = res.results;
           this.totalItems = res.rowCount;
+          this.currentPage = res.currentPage;
     })
   }
 }

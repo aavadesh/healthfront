@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { BookcontentService } from '../service/bookcontent.service';
 import { Bookcontent } from '../model/bookcontent';
-import { PaginationInstance } from 'ngx-pagination/dist/pagination-instance';
 import { ConfirmationService, ConfirmEventType, MessageService } from 'primeng/api';
 
 const tableName = 'BookContent';
@@ -18,6 +17,7 @@ export class IndexBookContentComponent implements OnInit {
   itemsPerPage = 15;
   totalItems: any;
   filterTerm!: string;
+  currentPage!: number;
 
   
   constructor(private bookContentService: BookcontentService, private router: Router,
@@ -34,12 +34,13 @@ export class IndexBookContentComponent implements OnInit {
       icon: 'pi pi-info-circle',
       accept: () => {
        this.bookContentService.delete(id).subscribe( (data)=>{
+         debugger
        // this.bookContent = this.bookContent.filter(u => u.id !== id);
        setTimeout(() => {
         this.messageService.add({ key: 'myKey1', severity:'info', summary:'Confirmed', detail:'Record deleted'});
       }, 500);
         
-        this.showData(this.p);
+        this.showData(this.currentPage);
       },(error)=>{
       } );
       },
@@ -61,17 +62,18 @@ export class IndexBookContentComponent implements OnInit {
         .subscribe( res => {
           this.bookContent = res.results;
           this.totalItems = res.rowCount;
+          this.currentPage = res.currentPage;
           },
           err => { 
             console.log(err);
           });
   }
-  getPage(page: any) {debugger
+  getPage(page: any) {
     this.bookContentService.getAllByRoute(page, this.itemsPerPage)
-    .subscribe(x => {debugger
-      this.bookContent =  x.results;
-      this.totalItems = x.rowCount;
-
+    .subscribe(res => {
+      this.bookContent =  res.results;
+      this.totalItems = res.rowCount;
+      this.currentPage = res.currentPage;
     })
   }
 }
