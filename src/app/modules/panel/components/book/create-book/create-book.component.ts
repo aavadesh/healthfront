@@ -73,6 +73,7 @@ export class CreateBookComponent implements OnInit {
   GetAuthorList(){
     this.bookService.getAll("Author")
       .subscribe(res => {
+        debugger
           this.authors = res;
           console.log(res);
         },

@@ -33,7 +33,7 @@
               --- Select Author ---
             </option>
             <option *ngFor="let item of authors" [value]="item.id">
-              {{item.name}} {{item.surName}}
+              {{item.name}} {{item.surname}}
             </option>
           </select>
           <div class="text-danger" *ngIf="submitted && handleError('authorid', 'required')">
