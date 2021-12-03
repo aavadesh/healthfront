@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Search } from '../model/Search';
 import { SearchService } from '../service/search.service';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-search-list',
   templateUrl: './search-list.component.html',
@@ -17,18 +17,21 @@ export class SearchListComponent implements OnInit {
   searchPhase = '';
   searchStrig!: string;
 
-  constructor(private searchService: SearchService, private router: Router) { }
+  constructor(private searchService: SearchService, private router: Router,
+    private activatedRoute: ActivatedRoute, private location: Location) { }
 
   ngOnInit(): void {
+    
   }
+
+  
+
   onClick() {
-   // searchStrig : encodeURI(this.searchPhase)
-    debugger
-    let encodedName = btoa(this.searchPhase);
-    this.searchService.getAllBySearch(encodedName)
+    const url = this.router.createUrlTree([], {relativeTo: this.activatedRoute, queryParams: {q: btoa(this.searchPhase)}}).toString()
+    this.location.go(url);
+    this.searchService.getAllBySearch(btoa(this.searchPhase))
       .subscribe(res => {
           this.searchList = res;
-          // this.totalItems = res.rowCount;
         },
         error => {
           console.log(error);
