@@ -27,9 +27,10 @@ export class SearchListComponent implements OnInit {
   
 
   onClick() {
-    const url = this.router.createUrlTree([], {relativeTo: this.activatedRoute, queryParams: {q: btoa(this.searchPhase)}}).toString()
+    debugger
+    const url = this.router.createUrlTree([], {relativeTo: this.activatedRoute, queryParams: {q: decodeURIComponent(this.searchPhase)}}).toString()
     this.location.go(url);
-    this.searchService.getAllBySearch(btoa(this.searchPhase))
+    this.searchService.getAllBySearch(encodeURIComponent(this.searchPhase))
       .subscribe(res => {
           this.searchList = res;
         },
